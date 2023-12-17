@@ -1,8 +1,11 @@
 package kafkaTest;
 
+import java.time.Duration;
+
 public interface IKafkaConstants {
 
-	public static String KAFKA_BROKERS = "localhost:9092";
+	//public static String KAFKA_BROKERS = "134.3.17.150:9092";
+	public static String KAFKA_BROKERS = "192.168.0.163:9091";
 
     public static Integer MESSAGE_COUNT=1000;
 
@@ -19,4 +22,6 @@ public interface IKafkaConstants {
     public static String OFFSET_RESET_EARLIER="earliest";
 
     public static Integer MAX_POLL_RECORDS=1;
+    
+    public static Duration POLLING_DURATION = Duration.ofMillis(1000);
 }

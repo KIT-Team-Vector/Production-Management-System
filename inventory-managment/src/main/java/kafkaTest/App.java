@@ -20,9 +20,9 @@ public class App {
 		int noMessageFound = 0;
 
 		while (true) {
-			ConsumerRecords<Long, String> consumerRecords = consumer.poll(1000);
 			// 1000 is the time in milliseconds consumer will wait if no record is found at
 			// broker.
+			ConsumerRecords<Long, String> consumerRecords = consumer.poll(IKafkaConstants.POLLING_DURATION);
 			if (consumerRecords.count() == 0) {
 				noMessageFound++;
 				if (noMessageFound > IKafkaConstants.MAX_NO_MESSAGE_FOUND_COUNT)
