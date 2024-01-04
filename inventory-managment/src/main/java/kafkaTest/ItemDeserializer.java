@@ -7,18 +7,18 @@ import org.apache.kafka.common.serialization.Deserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-public class CustomObjectDeserializer implements Deserializer<CustomObject> {
+public class ItemDeserializer implements Deserializer<Item> {
 
 	@Override
 	public void configure(Map<String, ?> configs, boolean isKey) {
 	}
 
 	@Override
-	public CustomObject deserialize(String topic, byte[] data) {
+	public Item deserialize(String topic, byte[] data) {
 		ObjectMapper mapper = new ObjectMapper();
-		CustomObject object = null;
+		Item object = null;
 		try {
-			object = mapper.readValue(data, CustomObject.class);
+			object = mapper.readValue(data, Item.class);
 		} catch (Exception exception) {
 			System.out.println("Error in deserializing bytes " + exception);
 		}

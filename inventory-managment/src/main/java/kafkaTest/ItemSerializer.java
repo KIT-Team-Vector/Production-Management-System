@@ -6,7 +6,7 @@ import org.apache.kafka.common.serialization.Serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class CustomSerializer implements Serializer<CustomObject> {
+public class ItemSerializer implements Serializer<Item> {
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
@@ -14,7 +14,7 @@ public class CustomSerializer implements Serializer<CustomObject> {
     }
 
     @Override
-    public byte[] serialize(String topic, CustomObject data) {
+    public byte[] serialize(String topic, Item data) {
         byte[] retVal = null;
         ObjectMapper objectMapper = new ObjectMapper();
         try {

@@ -15,27 +15,26 @@ public class App {
 	}
 
 	static void runConsumer() {
-		Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
+		Consumer<Long, Item> consumer = ConsumerCreator.createConsumer();
 
 		int noMessageFound = 0;
 
 		while (true) {
-			// 1000 is the time in milliseconds consumer will wait if no record is found at
-			// broker.
-			ConsumerRecords<Long, String> consumerRecords = consumer.poll(IKafkaConstants.POLLING_DURATION);
+			ConsumerRecords<Long, Item> consumerRecords = consumer.poll(IKafkaConstants.POLLING_DURATION);
 			if (consumerRecords.count() == 0) {
 				noMessageFound++;
 				if (noMessageFound > IKafkaConstants.MAX_NO_MESSAGE_FOUND_COUNT)
-					// If no message found count is reached to threshold exit loop.
-					break;
-				else
-					continue;
-			}
+	                // If no message found count is reached to threshold exit loop.  
+	                break;
+	              else
+	                  continue;
+	          }
+	
 
 			// print each record.
 			consumerRecords.forEach(record -> {
 				System.out.println("Record Key " + record.key());
-				System.out.println("Record value " + record.value());
+				System.out.println("Record value " + record.value().getName());
 				System.out.println("Record partition " + record.partition());
 				System.out.println("Record offset " + record.offset());
 			});
@@ -47,14 +46,13 @@ public class App {
 	}
 
 	static void runProducer() {
-		Producer<Long, String> producer = ProducerCreator.createProducer();
+		Producer<Long, Item> producer = ProducerCreator.createProducer();
 
-		for (int index = 0; index < IKafkaConstants.MESSAGE_COUNT; index++) {
-			ProducerRecord<Long, String> record = new ProducerRecord<Long, String>(IKafkaConstants.TOPIC_NAME,
-					"This is record " + index);
+			ProducerRecord<Long, Item> record = new ProducerRecord<Long, Item>(IKafkaConstants.TOPIC_NAME,
+					new Item("iteam4","4", "50"));
 			try {
 				RecordMetadata metadata = producer.send(record).get();
-				System.out.println("Record sent with key " + index + " to partition " + metadata.partition()
+				System.out.println("Record sent with key " + " to partition " + metadata.partition()
 						+ " with offset " + metadata.offset());
 			} catch (ExecutionException e) {
 				System.out.println("Error in sending record");
@@ -63,6 +61,5 @@ public class App {
 				System.out.println("Error in sending record");
 				System.out.println(e);
 			}
-		}
 	}
 }
