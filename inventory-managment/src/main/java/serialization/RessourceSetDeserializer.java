@@ -1,24 +1,26 @@
-package kafkaTest;
+package serialization;
 
 import java.util.Map;
+
 
 import org.apache.kafka.common.serialization.Deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import domain.RessourceSet;
 
 
-public class ItemDeserializer implements Deserializer<Item> {
+public class RessourceSetDeserializer implements Deserializer<RessourceSet> {
 
 	@Override
 	public void configure(Map<String, ?> configs, boolean isKey) {
 	}
 
 	@Override
-	public Item deserialize(String topic, byte[] data) {
+	public RessourceSet deserialize(String topic, byte[] data) {
 		ObjectMapper mapper = new ObjectMapper();
-		Item object = null;
+		RessourceSet object = null;
 		try {
-			object = mapper.readValue(data, Item.class);
+			object = mapper.readValue(data, RessourceSet.class);
 		} catch (Exception exception) {
 			System.out.println("Error in deserializing bytes " + exception);
 		}

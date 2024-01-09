@@ -1,4 +1,4 @@
-package kafkaTest;
+package kafka;
 
 import java.time.Duration;
 
@@ -11,7 +11,9 @@ public interface IKafkaConstants {
     // unique
     public static String CLIENT_ID="client1";
 
-    public static String TOPIC_NAME="demo";
+    public static String TOPIC_Error="Error";
+    public static String TOPIC_INVENTORY="FetchInventory";
+    public static String TOPIC_INVENTORY_RESPONSE="FetchInventoryResponse";
     // unique
     public static String GROUP_ID_CONFIG="consumerGroup3";
 

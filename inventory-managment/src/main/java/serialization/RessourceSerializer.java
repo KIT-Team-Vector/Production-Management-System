@@ -1,4 +1,4 @@
-package kafkaTest;
+package serialization;
 
 import java.util.Map;
 
@@ -6,7 +6,9 @@ import org.apache.kafka.common.serialization.Serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ItemSerializer implements Serializer<Item> {
+import domain.Ressource;
+
+public class RessourceSerializer implements Serializer<Ressource> {
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
@@ -14,7 +16,7 @@ public class ItemSerializer implements Serializer<Item> {
     }
 
     @Override
-    public byte[] serialize(String topic, Item data) {
+    public byte[] serialize(String topic, Ressource data) {
         byte[] retVal = null;
         ObjectMapper objectMapper = new ObjectMapper();
         try {

@@ -1,4 +1,4 @@
-package kafkaTest;
+package kafka;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.Partitioner;
