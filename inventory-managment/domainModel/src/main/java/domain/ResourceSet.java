@@ -2,18 +2,18 @@ package domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RessourceSet {
+public class ResourceSet {
 	
-	private Ressource ressource;
+	private Resource ressource;
 
 	private int amount;
 
-	public RessourceSet (@JsonProperty("ressource") Ressource ressource, @JsonProperty("amount") int amount) {
+	public ResourceSet (@JsonProperty("ressource") Resource ressource, @JsonProperty("amount") int amount) {
 		this.ressource = ressource;
 		this.amount = amount;
 	}
 	
-	public Ressource getRessource() {
+	public Resource getRessource() {
 		return ressource;
 	}
 

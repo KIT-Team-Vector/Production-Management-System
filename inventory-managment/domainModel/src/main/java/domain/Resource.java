@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Ressource implements Serializable {
+public class Resource implements Serializable {
 	/**
 	 * 
 	 */
@@ -14,13 +14,13 @@ public class Ressource implements Serializable {
 	private int id;
 	private String name;
 
-	public Ressource (@JsonProperty("id") int id, @JsonProperty("name") String name) {
+	public Resource (@JsonProperty("id") int id, @JsonProperty("name") String name) {
 		this.id = id;
 		this.name = name;
 	}
 	
 	@JsonIgnore
-	public Ressource () {
+	public Resource () {
 		
 	}
 
