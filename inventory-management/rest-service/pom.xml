@@ -43,7 +43,7 @@
 			<artifactId>jersey-hk2</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>pms</groupId>
+			<groupId>edu.kit.pms</groupId>
 			<artifactId>domain-model</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
