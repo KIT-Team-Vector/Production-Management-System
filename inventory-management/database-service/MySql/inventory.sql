@@ -7,7 +7,7 @@ USE `Inventory`;
 
 
 
-CREATE TABLE item (
+CREATE TABLE inventory (
   item_id INT NOT NULL,
   primary_name VARCHAR(50),
   amount INT,
@@ -16,7 +16,7 @@ CREATE TABLE item (
 
 
 
-INSERT INTO item (item_id, primary_name, amount)
+INSERT INTO inventory (item_id, primary_name, amount)
 VALUES
 (1,'Stahl', 20),
 (2,'Auto', 2),
