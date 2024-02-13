@@ -1,22 +1,23 @@
 package edu.kit.pms.mm.app;
 
 import edu.kit.pms.mm.core.*;
+import edu.kit.pms.mm.core.exceptions.InventoryException;
 import edu.kit.pms.mm.core.exceptions.ProductionException;
 
 import java.util.Collection;
 
 public class ProductionManager {
 
-    private final MachineRepository machineRepository;
+    private final MachineRepository<? extends Machine> machineRepository;
     private final Inventory inventory;
 
-    public ProductionManager(MachineRepository machineRepository, Inventory inventory) {
+    public ProductionManager(MachineRepository<? extends Machine> machineRepository, Inventory inventory) {
         this.machineRepository = machineRepository;
         this.inventory = inventory;
     }
 
-    public boolean produce(ResourceSet desiredResources) throws ProductionException {
-        Collection<Machine> availableMachines = machineRepository.find(desiredResources.resource());
+    public boolean produce(ResourceSet desiredResources) throws ProductionException, InventoryException {
+        Collection<? extends Machine> availableMachines = machineRepository.find(desiredResources.resource());
 
         if (availableMachines.isEmpty()) {
             throw new ProductionException("No machines available to produce resource " + desiredResources.resource().id());
@@ -27,7 +28,10 @@ public class ProductionManager {
         int requiredResourceAmount = desiredResources.amount() / chosenMachine.getMultiplier();
         requiredResourceAmount = desiredResources.amount() % 2 == 0 ? requiredResourceAmount : requiredResourceAmount + 1;
 
-        //TODO get required resources from inventory and add "produced" resources
+        ResourceSet availableResources = inventory.get(requiredResource, requiredResourceAmount);
+        if (availableResources != null) {
+            inventory.add(chosenMachine.produce(availableResources));
+        }
 
         return true;
     }
@@ -36,7 +40,7 @@ public class ProductionManager {
         return inventory;
     }
 
-    public MachineRepository getMachineRepository() {
+    public MachineRepository<? extends Machine> getMachineRepository() {
         return machineRepository;
     }
 }

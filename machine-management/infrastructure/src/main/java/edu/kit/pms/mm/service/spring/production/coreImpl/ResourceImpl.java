@@ -1,4 +1,4 @@
-package edu.kit.pms.mm.service.rest.coreImpl;
+package edu.kit.pms.mm.service.spring.production.coreImpl;
 
 import edu.kit.pms.mm.core.Resource;
 

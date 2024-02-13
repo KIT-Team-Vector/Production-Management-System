@@ -1,10 +1,12 @@
-package edu.kit.pms.mm.service.rest.coreImpl;
+package edu.kit.pms.mm.service.spring.data;
 
 import edu.kit.pms.mm.core.Machine;
 
 import edu.kit.pms.mm.core.Resource;
 import edu.kit.pms.mm.core.ResourceSet;
 import edu.kit.pms.mm.core.exceptions.ProductionException;
+import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceImpl;
+import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceSetImpl;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -18,7 +20,7 @@ public class OneToOneMachine implements Machine {
     private int inputResourceId;
     private int outputResourceId;
 
-    public void setId(int newId) {
+    public void setId(Integer newId) {
         if (newId <= 0) {
             throw new IllegalArgumentException("Machine ID must be greater than 0");
         }
@@ -31,11 +33,11 @@ public class OneToOneMachine implements Machine {
         return id;
     }
 
-    public void setInputResource(Resource newInputResource) {
-        setInputResource(newInputResource.id());
+    public void setInput(Resource newInputResource) {
+        setInput(newInputResource.id());
     }
 
-    public void setInputResource(int newInputResourceId) {
+    public void setInput(int newInputResourceId) {
         this.inputResourceId = newInputResourceId;
     }
 
@@ -44,11 +46,11 @@ public class OneToOneMachine implements Machine {
         return new ResourceImpl(inputResourceId);
     }
 
-    public void setOutputResource(Resource newOutputResource) {
-        setOutputResource(newOutputResource.id());
+    public void setOutput(Resource newOutputResource) {
+        setOutput(newOutputResource.id());
     }
 
-    public void setOutputResource(int newOutputResourceId) {
+    public void setOutput(int newOutputResourceId) {
         this.outputResourceId = newOutputResourceId;
     }
 

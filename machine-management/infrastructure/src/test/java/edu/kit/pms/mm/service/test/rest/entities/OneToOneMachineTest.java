@@ -6,9 +6,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import edu.kit.pms.mm.core.Resource;
 import edu.kit.pms.mm.core.ResourceSet;
 import edu.kit.pms.mm.core.exceptions.ProductionException;
-import edu.kit.pms.mm.service.rest.coreImpl.OneToOneMachine;
-import edu.kit.pms.mm.service.rest.coreImpl.ResourceImpl;
-import edu.kit.pms.mm.service.rest.coreImpl.ResourceSetImpl;
+import edu.kit.pms.mm.service.spring.data.OneToOneMachine;
+import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceImpl;
+import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceSetImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +25,8 @@ public class OneToOneMachineTest {
 
         _simpleOneToOneMachine = new OneToOneMachine();
         _simpleOneToOneMachine.setId(MACHINE_ID);
-        _simpleOneToOneMachine.setInputResource(_resourceOne);
-        _simpleOneToOneMachine.setOutputResource(_resourceTwo);
+        _simpleOneToOneMachine.setInput(_resourceOne);
+        _simpleOneToOneMachine.setOutput(_resourceTwo);
     }
 
     @Test
