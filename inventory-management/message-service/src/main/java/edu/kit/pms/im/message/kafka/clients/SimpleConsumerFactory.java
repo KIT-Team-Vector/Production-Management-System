@@ -1,4 +1,4 @@
-package kafka.clients;
+package edu.kit.pms.im.message.kafka.clients;
 
 import java.util.Properties;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -7,7 +7,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
 //import org.apache.kafka.common.serialization.StringDeserializer;
 
-import kafka.IKafkaConstants;
+import edu.kit.pms.im.message.kafka.IKafkaConstants;
 
 
 public class SimpleConsumerFactory<T, D> extends ConsumerFactory<T, D> {

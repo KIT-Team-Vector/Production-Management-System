@@ -1,17 +1,30 @@
-package database;
+package edu.kit.pms.im.database;
 
 public class SqlStatementGenerator {
 	
-	public String getSelectAllItems() {
-		return "SELECT * FROM item";
+	public static String selectAllResourceSets() {
+		return "SELECT * FROM inventory";
 	}
 	
-	public String getSelectItemWithId(String id) {
-		return "SELECT * FROM item WHERE id = " + id;
+	public static String selectResourceSetWithId() {
+		return "SELECT * FROM inventory WHERE id = ?";
 	}
 	
-	public String getSelectItemsWithName(String name) {
-		return "SELECT * FROM item WHERE primary_name = " + name;
+	public static String selectAndLockAmountWithId() {
+		return "SELECT amount FROM inventory WHERE id = ? FOR UPDATE";
 	}
+	
+	public static String selectResourceSetWithName() {
+		return "SELECT * FROM inventory WHERE primary_name = ?";
+	}
+	
+	public static String deleteResourceSetWithId() {
+		return "DELETE * FROM inventory WHERE id = ?";
+	}
+	
+	public static String updateResourceSetWithAmount() {
+		return "UPDATE inventory SET amount = ? WHERE id = ?";
+	}
+	
 
 }

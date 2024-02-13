@@ -1,8 +1,8 @@
-package services;
+package edu.kit.pms.im.message.services;
 
 import java.io.IOException;
 
-import messageHandlers.MessageHandler;
+import edu.kit.pms.im.message.handlers.MessageHandler;
 
 public class MessageReceiverServiceImpl implements MessageReceiverService {
 

@@ -1,4 +1,4 @@
-package kafka;
+package edu.kit.pms.im.message.kafka;
 
 import java.time.Duration;
 

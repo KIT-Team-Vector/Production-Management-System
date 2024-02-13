@@ -1,4 +1,4 @@
-package services;
+package edu.kit.pms.im.message.services;
 
 import java.util.concurrent.ExecutionException;
 
@@ -7,11 +7,11 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.BooleanSerializer;
 
-import domain.MicroserviceError;
-import kafka.IKafkaConstants;
-import kafka.clients.ProducerFactory;
-import kafka.clients.SimpleProducerFactory;
-import serialization.MicroserviceErrorSerializer;
+import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.message.kafka.IKafkaConstants;
+import edu.kit.pms.im.message.kafka.clients.ProducerFactory;
+import edu.kit.pms.im.message.kafka.clients.SimpleProducerFactory;
+import edu.kit.pms.im.message.serialization.MicroserviceErrorSerializer;
 
 public class MessageSenderServiceImpl implements MessageSenderService {
 	

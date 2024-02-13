@@ -1,4 +1,4 @@
-package serialization;
+package edu.kit.pms.im.message.serialization;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import org.apache.kafka.common.serialization.Deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import domain.MicroserviceError;
+import edu.kit.pms.im.domain.MicroserviceError;
 
 public class MicroserviceErrorDeserializer implements Deserializer<MicroserviceError> {
 	

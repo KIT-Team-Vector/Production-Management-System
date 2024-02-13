@@ -1,12 +1,13 @@
-package messageHandlers;
+package edu.kit.pms.im.message.handlers;
 
 import org.apache.kafka.clients.consumer.Consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import domain.ResourceSet;
-import kafka.IKafkaConstants;
-import kafka.clients.ConsumerFactory;
-import serialization.RessourceSetDeserializer;
+
+import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.message.kafka.IKafkaConstants;
+import edu.kit.pms.im.message.kafka.clients.ConsumerFactory;
+import edu.kit.pms.im.message.serialization.RessourceSetDeserializer;
 
 public class RemoveResourcesMessageHandler implements MessageHandler {
 

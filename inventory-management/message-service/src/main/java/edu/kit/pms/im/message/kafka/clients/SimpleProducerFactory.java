@@ -1,4 +1,4 @@
-package kafka.clients;
+package edu.kit.pms.im.message.kafka.clients;
 
 import java.util.Properties;
 
@@ -8,7 +8,7 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
 //import org.apache.kafka.common.serialization.StringSerializer;
 
-import kafka.IKafkaConstants;
+import edu.kit.pms.im.message.kafka.IKafkaConstants;
 
 public class SimpleProducerFactory<T, D> extends ProducerFactory<T, D> {
 

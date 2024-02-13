@@ -1,4 +1,4 @@
-package domain;
+package edu.kit.pms.im.domain;
 
 public class MicroserviceError {
 

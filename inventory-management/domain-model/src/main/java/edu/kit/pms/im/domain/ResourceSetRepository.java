@@ -1,21 +1,18 @@
-package domain;
+package edu.kit.pms.im.domain;
 
 import java.util.Collection;
 import java.util.List;
 
-public interface Inventory {
+public interface ResourceSetRepository {
 	
-	public void addRessourceSet(ResourceSet ressourceSet);
+	public Collection<ResourceSet> getAll();
 	
-	public void addRessourceSets(Collection<ResourceSet> ressourceSets);
+	public ResourceSet get(int id);
 	
-	public void deleteRessourceSet(String id);
+	public void delete(int id);
 	
-	public Collection<ResourceSet> getAllRessourceSets();
+	public void add(ResourceSet ressourceSet);
 	
-	public ResourceSet getRessourceSetById(String id);
+	public void updateAmount(int id, int deltaAmount);
 	
-	public Collection<ResourceSet> getRessourceSetByName(String name);
-	
-
 }

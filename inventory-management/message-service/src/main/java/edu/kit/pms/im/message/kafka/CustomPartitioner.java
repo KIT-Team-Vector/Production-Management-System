@@ -1,4 +1,4 @@
-package kafka;
+package edu.kit.pms.im.message.kafka;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.Partitioner;

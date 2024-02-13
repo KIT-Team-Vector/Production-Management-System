@@ -1,6 +1,6 @@
-package services;
+package edu.kit.pms.im.message.services;
 
-import domain.MicroserviceError;
+import edu.kit.pms.im.domain.MicroserviceError;
 
 public interface MessageSenderService {
 	

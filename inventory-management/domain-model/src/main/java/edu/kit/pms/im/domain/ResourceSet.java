@@ -1,4 +1,4 @@
-package domain;
+package edu.kit.pms.im.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package kafka.clients;
+package edu.kit.pms.im.message.kafka.clients;
 
 import org.apache.kafka.clients.producer.Producer;
 

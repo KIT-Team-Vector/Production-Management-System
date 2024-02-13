@@ -1,4 +1,4 @@
-package messageHandlers;
+package edu.kit.pms.im.message.handlers;
 
 import java.io.Closeable;
 

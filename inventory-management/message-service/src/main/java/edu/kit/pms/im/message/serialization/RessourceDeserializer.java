@@ -1,4 +1,4 @@
-package serialization;
+package edu.kit.pms.im.message.serialization;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import org.apache.kafka.common.serialization.Deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import domain.Resource;
+import edu.kit.pms.im.domain.Resource;
 
 
 public class RessourceDeserializer implements Deserializer<Resource> {
