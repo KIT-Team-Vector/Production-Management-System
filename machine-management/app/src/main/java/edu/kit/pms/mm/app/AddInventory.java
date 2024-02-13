@@ -3,10 +3,10 @@ package edu.kit.pms.mm.app;
 import edu.kit.pms.mm.core.Resource;
 import edu.kit.pms.mm.core.ResourceSet;
 
-public interface Inventory {
+public interface AddInventory {
 
     boolean add(ResourceSet resourceSet);
-    ResourceSet get(ResourceSet resourceSet);
-    int checkQuantity(Resource resource);
+    boolean add(Resource resource, int amount);
+    boolean add(int resourceId, int amount);
 
 }
