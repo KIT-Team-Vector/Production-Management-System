@@ -39,12 +39,7 @@
 		</dependency>
 		<dependency>
 			<groupId>edu.kit.pms</groupId>
-			<artifactId>domain-model</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>edu.kit.pms</groupId>
-			<artifactId>rest-service</artifactId>
+			<artifactId>common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
@@ -68,7 +63,8 @@
 						</goals>
 						<configuration>
 							<outputDirectory>
-								${basedir}/src/main/resources/edu/kit/pms/im/inventory/resourceLoader</outputDirectory>
+								${project.basedir}/target/warFiles
+							</outputDirectory>
 							<overwrite>true</overwrite>
 							<resources>
 								<resource>
@@ -84,25 +80,18 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.6.0</version>
-				<executions>
-					<execution>
-						<phase>initialize</phase>
-						<goals>
-							<goal>properties</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>3.6.0</version>
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<mainClass>edu.kit.pms.im.inventory.Main</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
 				<executions>
 					<execution>
@@ -113,18 +102,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<mainClass>main.Main</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
 			</plugin>
 		</plugins>
 

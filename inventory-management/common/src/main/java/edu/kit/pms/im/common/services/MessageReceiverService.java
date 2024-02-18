@@ -1,4 +1,4 @@
-package edu.kit.pms.im.message.services;
+package edu.kit.pms.im.common.services;
 
 public interface MessageReceiverService extends Runnable {
 	
