@@ -6,6 +6,6 @@ public interface MessageHandler extends Closeable {
 	
 	public void handleMessages();
 	
-	public MessageHandler allocateRessources();
+	public MessageHandler allocateResources();
 
 }

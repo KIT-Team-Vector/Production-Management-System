@@ -4,37 +4,35 @@ import org.apache.kafka.clients.consumer.Consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 
-import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.common.concepts.ResourceSetImpl;
+import edu.kit.pms.im.common.controllers.ExternalInterfaceController;
 import edu.kit.pms.im.message.kafka.IKafkaConstants;
 import edu.kit.pms.im.message.kafka.clients.ConsumerFactory;
-import edu.kit.pms.im.message.serialization.RessourceSetDeserializer;
+import edu.kit.pms.im.message.serialization.ResourceSetDeserializer;
 
-public class RemoveResourcesMessageHandler implements MessageHandler {
+public class ChangeAmountOfResourceHandler implements MessageHandler {
 
-	private ConsumerFactory<ResourceSet, RessourceSetDeserializer> consumerFactory;
-	private Consumer<Long, ResourceSet> consumer;
+	private ConsumerFactory<ResourceSetImpl, ResourceSetDeserializer> consumerFactory;
+	private ExternalInterfaceController controller;
+	private Consumer<Long, ResourceSetImpl> consumer;
 
-	public RemoveResourcesMessageHandler(ConsumerFactory<ResourceSet, RessourceSetDeserializer> consumerFactory) {
+	public ChangeAmountOfResourceHandler(ExternalInterfaceController controller, ConsumerFactory<ResourceSetImpl, ResourceSetDeserializer> consumerFactory) {
+		this.controller = controller;
 		this.consumerFactory = consumerFactory;
 	}
 
 	@Override
 	public void handleMessages() throws Error {
 		if (consumer == null) {
-			this.allocateRessources();
+			this.allocateResources();
 		}
-		ConsumerRecords<Long, ResourceSet> consumerRecords = consumer.poll(IKafkaConstants.POLLING_DURATION);
-		// print each record.
+		ConsumerRecords<Long, ResourceSetImpl> consumerRecords = consumer.poll(IKafkaConstants.POLLING_DURATION);
 		consumerRecords.forEach(record -> {
-			System.out.println("Record Key " + record.key());
-			System.out.println("Record value: " + record.value().getRessource().getName() + " "
-					+ record.value().getRessource().getId() + " " + record.value().getAmount());
-			System.out.println("Record partition " + record.partition());
-			System.out.println("Record offset " + record.offset());
+			// handle the request
+			controller.changeAmountOfResource(record.key(), record.value());
 		});
 		// commits the offset of record to broker.
 		consumer.commitAsync();
-		// ToDO handle the request
 	}
 
 	@Override
@@ -44,8 +42,8 @@ public class RemoveResourcesMessageHandler implements MessageHandler {
 	}
 
 	@Override
-	public MessageHandler allocateRessources() {
-		consumer = consumerFactory.create(IKafkaConstants.TOPIC_REMOVE_FROM_INVENTORY);
+	public MessageHandler allocateResources() {
+		consumer = consumerFactory.create(IKafkaConstants.TOPIC_CHANGE_AMOUNT_OF_RESOURCE_FROM_INVENTORY);
 		return this;
 	}
 

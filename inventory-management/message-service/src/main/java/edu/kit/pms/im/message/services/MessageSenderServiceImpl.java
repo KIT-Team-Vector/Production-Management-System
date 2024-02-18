@@ -7,10 +7,10 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.BooleanSerializer;
 
+import edu.kit.pms.im.common.services.MessageSenderService;
 import edu.kit.pms.im.domain.MicroserviceError;
 import edu.kit.pms.im.message.kafka.IKafkaConstants;
 import edu.kit.pms.im.message.kafka.clients.ProducerFactory;
-import edu.kit.pms.im.message.kafka.clients.SimpleProducerFactory;
 import edu.kit.pms.im.message.serialization.MicroserviceErrorSerializer;
 
 public class MessageSenderServiceImpl implements MessageSenderService {
@@ -27,10 +27,10 @@ public class MessageSenderServiceImpl implements MessageSenderService {
 	}
 
 	@Override
-	public void sendError(MicroserviceError mError) {
+	public void sendError(Long key, MicroserviceError mError) {
 
 		ProducerRecord<Long, MicroserviceError> record = new ProducerRecord<Long, MicroserviceError>(
-				IKafkaConstants.TOPIC_REMOVE_FROM_INVENTORY, 1L, mError);
+				IKafkaConstants.TOPIC_Error, key, mError);
 
 		try {
 			// producer is thread safe
@@ -48,11 +48,10 @@ public class MessageSenderServiceImpl implements MessageSenderService {
 	}
 
 	@Override
-	public void sendDeleteFromInventoryResponse(Boolean success) {
+	public void sendChangeAmountOfResourceResponse(Long key, Boolean success) {
 		
 		ProducerRecord<Long, Boolean> record = new ProducerRecord<Long, Boolean>(
-				IKafkaConstants.TOPIC_REMOVE_FROM_INVENTORY, 1L, success);
-
+				IKafkaConstants.TOPIC_CHANGE_AMOUNT_OF_RESOURCE_FROM_INVENTORY_RESPONSE, key, success);
 		try {
 			// producer is thread safe
 			booleanProducer.send(record).get();

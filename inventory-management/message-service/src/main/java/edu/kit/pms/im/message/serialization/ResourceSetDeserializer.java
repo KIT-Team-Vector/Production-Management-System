@@ -7,21 +7,21 @@ import org.apache.kafka.common.serialization.Deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.common.concepts.ResourceSetImpl;
 
 
-public class RessourceSetDeserializer implements Deserializer<ResourceSet> {
+public class ResourceSetDeserializer implements Deserializer<ResourceSetImpl> {
 
 	@Override
 	public void configure(Map<String, ?> configs, boolean isKey) {
 	}
 
 	@Override
-	public ResourceSet deserialize(String topic, byte[] data) {
+	public ResourceSetImpl deserialize(String topic, byte[] data) {
 		ObjectMapper mapper = new ObjectMapper();
-		ResourceSet object = null;
+		ResourceSetImpl object = null;
 		try {
-			object = mapper.readValue(data, ResourceSet.class);
+			object = mapper.readValue(data, ResourceSetImpl.class);
 		} catch (Exception exception) {
 			System.out.println("Error in deserializing bytes " + exception);
 		}

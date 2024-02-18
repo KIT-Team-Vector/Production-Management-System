@@ -7,9 +7,9 @@ import org.apache.kafka.common.serialization.Serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.common.concepts.ResourceSetImpl;
 
-public class RessourceSetSerializer implements Serializer<ResourceSet> {
+public class ResourceSetSerializer implements Serializer<ResourceSetImpl> {
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
@@ -17,7 +17,7 @@ public class RessourceSetSerializer implements Serializer<ResourceSet> {
     }
 
     @Override
-    public byte[] serialize(String topic, ResourceSet data) {
+    public byte[] serialize(String topic, ResourceSetImpl data) {
         byte[] retVal = null;
         ObjectMapper objectMapper = new ObjectMapper();
         try {
