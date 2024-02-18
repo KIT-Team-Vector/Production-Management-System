@@ -1,7 +1,6 @@
 package edu.kit.pms.im.domain;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface ResourceSetRepository {
 	
@@ -9,10 +8,10 @@ public interface ResourceSetRepository {
 	
 	public ResourceSet get(int id);
 	
-	public void delete(int id);
+	public boolean delete(int id);
 	
-	public void add(ResourceSet ressourceSet);
+	public ResourceSet add(String name, int amount);
 	
-	public void updateAmount(int id, int deltaAmount);
+	public boolean updateAmount(int id, int deltaAmount) throws MicroserviceError;
 	
 }

@@ -8,15 +8,14 @@ USE `Inventory`;
 
 
 CREATE TABLE inventory (
-  item_id INT NOT NULL,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   primary_name VARCHAR(50),
-  amount INT,
-  PRIMARY KEY (item_id)
+  amount INT
 );
 
 
 
-INSERT INTO inventory (item_id, primary_name, amount)
+INSERT INTO inventory (id, primary_name, amount)
 VALUES
 (1,'Stahl', 20),
 (2,'Auto', 2),

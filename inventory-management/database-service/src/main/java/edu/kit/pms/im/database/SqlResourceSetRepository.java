@@ -1,53 +1,53 @@
 package edu.kit.pms.im.database;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import edu.kit.pms.im.domain.ResourceSetRepository;
-import edu.kit.pms.im.domain.Resource;
+import edu.kit.pms.im.domain.MicroserviceError;
 import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.domain.ResourceSetRepository;
+import edu.kit.pms.im.common.concepts.ResourceImpl;
+import edu.kit.pms.im.common.concepts.ResourceSetImpl;
 
 public class SqlResourceSetRepository implements ResourceSetRepository {
 
 	public Collection<ResourceSet> getAll() {
-		Collection<ResourceSet> ressourceSets = new ArrayList<>();
+		Collection<ResourceSet> resourceSets = new ArrayList<>();
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory",
 				"inventory_managment_admin", "Inv1123581321");
 				PreparedStatement stmt = con.prepareStatement(SqlStatementGenerator.selectAllResourceSets())) {
 			ResultSet resultSet = stmt.executeQuery();
 			while (resultSet.next()) {
-				Resource ressource = new Resource(resultSet.getInt("id"), resultSet.getString("primary_name"));
-				ResourceSet ressourceSet = new ResourceSet(ressource, resultSet.getInt("amount"));
-				ressourceSets.add(ressourceSet);
+				ResourceSet resourceSet = getResourceSet(resultSet);
+				resourceSets.add(resourceSet);
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return ressourceSets;
+		return resourceSets;
 	}
 
 	@Override
 	public ResourceSet get(int id) {
-		ResourceSet ressourceSet;
+		ResourceSet resourceSet;
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory",
 				"inventory_managment_admin", "Inv1123581321");
 				PreparedStatement stmt = con.prepareStatement(SqlStatementGenerator.selectResourceSetWithId())) {
 
 			stmt.setInt(1, id);
 			ResultSet resultSet = stmt.executeQuery();
-			while (resultSet.next()) {
-				ressourceSet = getResourceSet(resultSet);
-				return ressourceSet;
+			if (resultSet.next()) {
+				resourceSet = getResourceSet(resultSet);
+				return resourceSet;
 			}
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,64 +56,102 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 	}
 
 	@Override
-	public void add(ResourceSet ressourceSet) {
-		// TODO Auto-generated method stub
-
+	public ResourceSet add(String name, int amount) {
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory",
+				"inventory_managment_admin", "Inv1123581321");
+				PreparedStatement addStatement = con.prepareStatement(SqlStatementGenerator.insertWithNameAndAmount());
+				PreparedStatement getLastInsertedIdStatement = con.prepareStatement(SqlStatementGenerator.getLastInsertedId())) {
+			
+			con.setAutoCommit(false);
+			addStatement.setString(1, name);
+			addStatement.setInt(2, amount);
+			addStatement.executeUpdate();
+			
+			ResultSet resultSet = getLastInsertedIdStatement.executeQuery();
+			if (resultSet.next()) {
+		        int lastInsertedId = resultSet.getInt(1);
+		        if (lastInsertedId > 0) {
+		        	return new ResourceSetImpl(new ResourceImpl(lastInsertedId, name), amount);
+		        }
+		    }
+			
+			con.commit();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 
 	@Override
-	public void delete(int id) {
-		// TODO Auto-generated method stub
+	public boolean delete(int id) {
+		int rowInserted = 0;
+		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory",
+				"inventory_managment_admin", "Inv1123581321");
+				PreparedStatement stmt = con.prepareStatement(SqlStatementGenerator.deleteResourceSetWithId())) {
 
+			stmt.setInt(1, id);
+			rowInserted = stmt.executeUpdate();
+			return rowInserted > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
-	public void updateAmount(int id, int deltaAount) {
+	public boolean updateAmount(int id, int deltaAmount) throws MicroserviceError {
 		try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventory",
 				"inventory_managment_admin", "Inv1123581321");
 				PreparedStatement selectStatement = con
-						.prepareStatement(SqlStatementGenerator.selectAndLockAmountWithId());
+						.prepareStatement(SqlStatementGenerator.selectAndLockResourceSetWithId());
 				PreparedStatement updateStatement = con
 						.prepareStatement(SqlStatementGenerator.updateResourceSetWithAmount())) {
 			con.setAutoCommit(false);
 			selectStatement.setInt(1, id);
 			ResultSet resultSet = selectStatement.executeQuery();
+
 			if (resultSet.next()) {
 				int oldAmount = resultSet.getInt("amount");
-				int newAmount = oldAmount - deltaAount;
+				int newAmount = oldAmount + deltaAmount;
 
 				if (newAmount < 0) {
-					throw new IllegalArgumentException();
+					throw new MicroserviceError("Incorrect_Amount", "The amount of the resource with id " + id
+							+ " cannot fall below zero, available amount: " + oldAmount);
 				}
 				updateStatement.setInt(1, newAmount);
 				updateStatement.setInt(2, id);
 				updateStatement.executeUpdate();
+
+			} else {
+				throw new MicroserviceError("No_Resource", "The resource with " + id + " does not exist");
 			}
 
 			con.commit();
+			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
 	}
 
 	private ResourceSet getResourceSet(ResultSet resultSet) throws SQLException {
-		return new ResourceSet(getResource(resultSet), getAmount(resultSet));
+		return new ResourceSetImpl(getResource(resultSet), getAmount(resultSet));
 	}
 
-	private Resource getResource(ResultSet resultSet) throws SQLException {
-		return new Resource(getId(resultSet), getName(resultSet));
+	private ResourceImpl getResource(ResultSet resultSet) throws SQLException {
+		return new ResourceImpl(getId(resultSet), getName(resultSet));
 	}
-	
+
 	private int getId(ResultSet resultSet) throws SQLException {
 		return resultSet.getInt("id");
 	}
-	
+
 	private String getName(ResultSet resultSet) throws SQLException {
 		return resultSet.getString("primary_name");
 	}
-	
+
 	private int getAmount(ResultSet resultSet) throws SQLException {
 		return resultSet.getInt("amount");
 	}
