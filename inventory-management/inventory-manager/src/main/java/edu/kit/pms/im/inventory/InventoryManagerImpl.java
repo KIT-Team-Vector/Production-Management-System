@@ -1,35 +1,40 @@
 package edu.kit.pms.im.inventory;
 
-import edu.kit.pms.im.domain.ResourceSetRepository;
+import edu.kit.pms.im.domain.MicroserviceError;
 import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.domain.ResourceSetRepository;
 
-public class InventoryManagerImpl implements InventoryManager{
-	
-	
-	private ResourceSetRepository inventory;
-	
-	
-	public InventoryManagerImpl(ResourceSetRepository inventory) {
+public class InventoryManagerImpl implements InventoryManager {
+
+
+	private ResourceSetRepository resourceSetRepository;
+
+	public InventoryManagerImpl(ResourceSetRepository resourceSetRepository) {
 		super();
-		this.inventory = inventory;
+		this.resourceSetRepository = resourceSetRepository;
 	}
 
 
-	public void addResourceSet(ResourceSet resourceSet) {
+	public ResourceSet addResourceSet(ResourceSet resourceSet)  {
+		// ignore id, id are assigned by the data base
+		return resourceSetRepository.add(resourceSet.resource().name(), resourceSet.amount());
 	}
-
 
 	@Override
 	public ResourceSet getResourceSet(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return resourceSetRepository.get(id);
 	}
 
+	@Override
+	public boolean removeResourceSet(int id) {
+		return resourceSetRepository.delete(id);
+	}
 
 	@Override
-	public ResourceSet removeResourceSet(ResourceSet resourceSet) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean changeAmountOfResource(ResourceSet resourceSet) throws MicroserviceError {
+		boolean success = resourceSetRepository.updateAmount(resourceSet.resource().id(), resourceSet.amount());	
+		return success;
+
 	}
 
 }
