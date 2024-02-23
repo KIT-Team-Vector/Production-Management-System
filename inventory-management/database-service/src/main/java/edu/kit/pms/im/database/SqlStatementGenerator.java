@@ -33,6 +33,10 @@ public class SqlStatementGenerator {
 	public static String insertWithNameAndAmount() {
 		return "INSERT INTO inventory (primary_name, amount) VALUES (?, ?)";
 	}
+	
+	public static String insertWithAll() {
+		return "INSERT INTO inventory (id, primary_name, amount) VALUES (?, ?, ?)";
+	}
 
 
 }
