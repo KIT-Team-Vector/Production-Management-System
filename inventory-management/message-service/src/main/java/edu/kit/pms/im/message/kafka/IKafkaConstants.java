@@ -10,12 +10,12 @@ public interface IKafkaConstants {
     public static Integer MESSAGE_COUNT=1000;
     // unique
     public static String CLIENT_ID="client1-id-inventory-managment";
- // unique
+    // unique
     public static String GROUP_ID_CONFIG="group1-id-inventory-managment";
 
     public static String TOPIC_Error="Error";
-    public static String TOPIC_CHANGE_AMOUNT_OF_RESOURCE_FROM_INVENTORY="changeAmountOfResourceFromInventory";
-    public static String TOPIC_CHANGE_AMOUNT_OF_RESOURCE_FROM_INVENTORY_RESPONSE="changeAmountOfResourceFromInventoryResponse";
+    public static String TOPIC_DECREASE_RESOURCE_SET_REQUEST="decreaseResourceSetRequest";
+    public static String TOPIC_DECREASE_RESOURCE_SET_RESPONSE="decreaseResourceSetResponse";
 
     public static Integer MAX_NO_MESSAGE_FOUND_COUNT=100;
 
