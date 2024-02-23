@@ -1,1 +1,1 @@
-SELECT * FROM inventory.inventory;
+SELECT * FROM inventorydatabase.inventory;
