@@ -48,10 +48,10 @@ public class MessageSenderServiceImpl implements MessageSenderService {
 	}
 
 	@Override
-	public void sendChangeAmountOfResourceResponse(Long key, Boolean success) {
+	public void sendDecreaseResourceSetResponse(Long key, Boolean success) {
 		
 		ProducerRecord<Long, Boolean> record = new ProducerRecord<Long, Boolean>(
-				IKafkaConstants.TOPIC_CHANGE_AMOUNT_OF_RESOURCE_FROM_INVENTORY_RESPONSE, key, success);
+				IKafkaConstants.TOPIC_DECREASE_RESOURCE_SET_RESPONSE, key, success);
 		try {
 			// producer is thread safe
 			booleanProducer.send(record).get();

@@ -6,7 +6,7 @@ public interface MessageSenderService {
 	
 	public void sendError(Long key, MicroserviceError mError);
 	
-	public void sendChangeAmountOfResourceResponse(Long key, Boolean success);
+	public void sendDecreaseResourceSetResponse(Long key, Boolean success);
 	
 	public void stop();
 

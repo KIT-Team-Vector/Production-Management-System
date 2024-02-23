@@ -1,8 +1,8 @@
 package assets;
 
 import edu.kit.pms.im.common.concepts.ResourceSetImpl;
-import edu.kit.pms.im.common.controllers.ExternalInterfaceController;
-import edu.kit.pms.im.common.controllers.MessageAndRestController;
+import edu.kit.pms.im.common.controllers.InventoryController;
+import edu.kit.pms.im.common.controllers.InventoryControllerImpl;
 import edu.kit.pms.im.domain.ResourceSet;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -21,10 +21,10 @@ import jakarta.ws.rs.core.Response.Status;
 @Path("/resource/set")
 public class ResourceSetAsset {
 
-	private ExternalInterfaceController controller;
+	private InventoryController controller;
 
 	public ResourceSetAsset() {
-		controller = MessageAndRestController.getInstance();
+		controller = InventoryControllerImpl.getInstance();
 	}
 
 	/**

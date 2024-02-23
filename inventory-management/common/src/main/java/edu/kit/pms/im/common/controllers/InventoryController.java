@@ -2,7 +2,7 @@ package edu.kit.pms.im.common.controllers;
 
 import edu.kit.pms.im.domain.ResourceSet;
 
-public interface ExternalInterfaceController {
+public interface InventoryController {
 
 	public ResourceSet getResourceSet(int id);
 
@@ -10,6 +10,6 @@ public interface ExternalInterfaceController {
 
 	public boolean removeResourceSet(int id);
 
-	public void changeAmountOfResource(Long key, ResourceSet resourceSet);
+	public void decreaseResourceSet(Long key, ResourceSet resourceSet);
 
 }
