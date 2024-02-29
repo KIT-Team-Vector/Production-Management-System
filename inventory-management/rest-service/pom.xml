@@ -16,6 +16,7 @@
 		<jersey.version>3.1.5</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<war.mvn.plugin.version>3.4.0</war.mvn.plugin.version>
+		<warFilePath>${project.build.directory}/${project.build.finalName}.war</warFilePath>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -44,8 +45,9 @@
 		</dependency>
 		<dependency>
 			<groupId>edu.kit.pms</groupId>
-			<artifactId>domain-model</artifactId>
+			<artifactId>common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -63,6 +65,13 @@
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.4.0</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Implementation-Version>1.0.0</Implementation-Version>
+						</manifestEntries>
+					</archive>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
