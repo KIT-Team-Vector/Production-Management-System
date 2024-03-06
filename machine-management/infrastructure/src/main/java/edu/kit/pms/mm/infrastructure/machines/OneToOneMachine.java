@@ -1,16 +1,16 @@
-package edu.kit.pms.mm.service.spring.data;
+package edu.kit.pms.mm.infrastructure.machines;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.kit.pms.mm.core.Machine;
-
 import edu.kit.pms.mm.core.Resource;
-import edu.kit.pms.mm.core.ResourceSet;
 import edu.kit.pms.mm.core.exceptions.ProductionException;
-import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceImpl;
-import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceSetImpl;
+import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
+import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceSetImpl;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OneToOneMachine implements Machine {
 
     private static final int PRODUCTION_MULTIPLIER = 1;
@@ -19,6 +19,11 @@ public class OneToOneMachine implements Machine {
     private Integer id;
     private int inputResourceId;
     private int outputResourceId;
+
+    @Override
+    public int getId() {
+        return id;
+    }
 
     public void setId(Integer newId) {
         if (newId <= 0) {
@@ -29,8 +34,8 @@ public class OneToOneMachine implements Machine {
     }
 
     @Override
-    public int getId() {
-        return id;
+    public Resource getInput() {
+        return new ResourceImpl(inputResourceId);
     }
 
     public void setInput(Resource newInputResource) {
@@ -42,8 +47,8 @@ public class OneToOneMachine implements Machine {
     }
 
     @Override
-    public Resource getInput() {
-        return new ResourceImpl(inputResourceId);
+    public Resource getOutput() {
+        return new ResourceImpl(outputResourceId);
     }
 
     public void setOutput(Resource newOutputResource) {
@@ -55,17 +60,12 @@ public class OneToOneMachine implements Machine {
     }
 
     @Override
-    public Resource getOutput() {
-        return new ResourceImpl(outputResourceId);
-    }
-
-    @Override
     public int getMultiplier() {
         return PRODUCTION_MULTIPLIER;
     }
 
     @Override
-    public ResourceSet produce(ResourceSet providedResourceSet) throws ProductionException{
+    public edu.kit.pms.mm.core.ResourceSet produce(edu.kit.pms.mm.core.ResourceSet providedResourceSet) throws ProductionException {
         if (providedResourceSet.resource().id() == inputResourceId) {
             Resource outputResource = new ResourceImpl(outputResourceId);
             int outputResourceAmount = providedResourceSet.amount() * PRODUCTION_MULTIPLIER;

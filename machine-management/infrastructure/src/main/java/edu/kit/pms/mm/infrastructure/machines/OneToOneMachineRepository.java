@@ -1,4 +1,4 @@
-package edu.kit.pms.mm.service.spring.data;
+package edu.kit.pms.mm.infrastructure.machines;
 
 import org.springframework.data.repository.CrudRepository;
 

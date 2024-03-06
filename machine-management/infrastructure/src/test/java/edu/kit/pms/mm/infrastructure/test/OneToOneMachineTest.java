@@ -1,16 +1,15 @@
-package edu.kit.pms.mm.service.test.rest.entities;
+package edu.kit.pms.mm.infrastructure.test;
+
+import edu.kit.pms.mm.core.Resource;
+import edu.kit.pms.mm.core.exceptions.ProductionException;
+import edu.kit.pms.mm.infrastructure.machines.OneToOneMachine;
+import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
+import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceSetImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
-import edu.kit.pms.mm.core.Resource;
-import edu.kit.pms.mm.core.ResourceSet;
-import edu.kit.pms.mm.core.exceptions.ProductionException;
-import edu.kit.pms.mm.service.spring.data.OneToOneMachine;
-import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceImpl;
-import edu.kit.pms.mm.service.spring.production.coreImpl.ResourceSetImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 public class OneToOneMachineTest {
     private static final int MACHINE_ID = 1;
@@ -45,17 +44,17 @@ public class OneToOneMachineTest {
 
     @Test
     public void test_produce_valid() throws ProductionException {
-        ResourceSet providedInputResourceSet = new ResourceSetImpl(_resourceOne, 10);
-        ResourceSet expectedOutputResourceSet = new ResourceSetImpl(_resourceTwo, 10);
+        edu.kit.pms.mm.core.ResourceSet providedInputResourceSet = new ResourceSetImpl(_resourceOne, 10);
+        edu.kit.pms.mm.core.ResourceSet expectedOutputResourceSet = new ResourceSetImpl(_resourceTwo, 10);
 
-        ResourceSet actualProducedOutputSet = _simpleOneToOneMachine.produce(providedInputResourceSet);
+        edu.kit.pms.mm.core.ResourceSet actualProducedOutputSet = _simpleOneToOneMachine.produce(providedInputResourceSet);
 
         assertThat(actualProducedOutputSet).isEqualTo(expectedOutputResourceSet);
     }
 
     @Test
     public void test_produce_invalidProvidedResources() {
-        ResourceSet providedInputResourceSet = new ResourceSetImpl(_resourceTwo, 10);
+        edu.kit.pms.mm.core.ResourceSet providedInputResourceSet = new ResourceSetImpl(_resourceTwo, 10);
 
         assertThatThrownBy(() -> _simpleOneToOneMachine.produce(providedInputResourceSet))
                 .isInstanceOf(ProductionException.class);

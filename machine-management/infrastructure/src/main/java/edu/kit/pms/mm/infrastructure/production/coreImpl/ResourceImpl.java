@@ -1,7 +1,9 @@
-package edu.kit.pms.mm.service.spring.production.coreImpl;
+package edu.kit.pms.mm.infrastructure.production.coreImpl;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.kit.pms.mm.core.Resource;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record ResourceImpl(int id, String name) implements Resource {
 
     public ResourceImpl(int id) {
