@@ -7,7 +7,7 @@ import edu.kit.pms.mm.core.exceptions.InventoryException;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceSetImpl;
 import edu.kit.pms.mm.infrastructure.production.inventory.messageService.ConsumerFactory;
-import edu.kit.pms.mm.infrastructure.production.inventory.messageService.IKafkaConstants;
+import edu.kit.pms.mm.infrastructure.production.inventory.messageService.KafkaConstants;
 import edu.kit.pms.mm.infrastructure.production.inventory.messageService.ProducerFactory;
 import edu.kit.pms.mm.infrastructure.production.inventory.messageService.ResourceSetImplSerializer;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -40,7 +40,7 @@ public class GetInventoryImpl implements GetInventory {
     @Override
     public ResourceSet get(ResourceSet resourceSet) throws InventoryException {
         long msgRecordKey = new Random().nextLong();
-        ProducerRecord<Long, ResourceSet> msgRecord = new ProducerRecord<>(IKafkaConstants.TOPIC_DECREASE_RESOURCE_SET_REQUEST, msgRecordKey, resourceSet);
+        ProducerRecord<Long, ResourceSet> msgRecord = new ProducerRecord<>(KafkaConstants.TOPIC_DECREASE_RESOURCE_SET_REQUEST, msgRecordKey, resourceSet);
 
         try {
             msgProducer.send(msgRecord).get();
@@ -69,9 +69,9 @@ public class GetInventoryImpl implements GetInventory {
         AtomicReference<Boolean> response = new AtomicReference<>();
         AtomicReference<Boolean> noMsgYet = new AtomicReference<>(true);
 
-        try (Consumer<Long, Boolean> msgConsumer = consumerFactory.create(IKafkaConstants.TOPIC_DECREASE_RESOURCE_SET_RESPONSE)) {
+        try (Consumer<Long, Boolean> msgConsumer = consumerFactory.create(KafkaConstants.TOPIC_DECREASE_RESOURCE_SET_RESPONSE)) {
             while (noMsgYet.get()) {
-                ConsumerRecords<Long, Boolean> consumerRecords = msgConsumer.poll(IKafkaConstants.POLLING_DURATION);
+                ConsumerRecords<Long, Boolean> consumerRecords = msgConsumer.poll(KafkaConstants.POLLING_DURATION);
                 consumerRecords.forEach(record -> {
                     if (record.key().equals(expectedResponseKey)) {
                         response.set(record.value());

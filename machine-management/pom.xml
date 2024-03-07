@@ -10,7 +10,7 @@
     </parent>
     <groupId>edu.kit.pms</groupId>
     <artifactId>machine-management</artifactId>
-    <version>0.2.1</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>machine-management</name>
     <description>machine-management</description>
@@ -42,4 +42,8 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>${project.groupId}.${project.parent.artifactId}.${project.artifactId}</finalName>
+    </build>
 </project>

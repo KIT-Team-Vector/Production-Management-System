@@ -1,0 +1,35 @@
+name: machine-management
+
+services:
+  machine-db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: sqlRootPW
+      MYSQL_DATABASE: machineManagementDB
+      MYSQL_USER: springUser
+      MYSQL_PASSWORD: springUserPW
+    volumes:
+      - ./infrastructure/src/main/resources/initMachineManagementDB.sql:/docker-entrypoint-initdb.d/initMachineManagementDB.sql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+
+  manager:
+    image: machine-management:latest
+    build: .
+    depends_on:
+      machine-db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_SPRING_USER_NAME=springUser
+      - DB_SPRING_USER_PW=springUserPW
+      - DB_HOST=machine-db
+      - DB_PORT=3306
+      - DB_NAME=machineManagementDB
+      - INVENTORY_HOST=localhost
+      - INVENTORY_PORT=8080
