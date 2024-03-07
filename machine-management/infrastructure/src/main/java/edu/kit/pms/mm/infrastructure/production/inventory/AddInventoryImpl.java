@@ -31,7 +31,7 @@ public class AddInventoryImpl implements AddInventory {
         String inventoryServicePort = System.getenv("INVENTORY_PORT");
 
         try {
-            addedResourceSet = restTemplate.postForObject("http://" + inventoryServiceHost +":" + inventoryServicePort + "/rest-service/inventory/resource/set", resourceSet, edu.kit.pms.mm.core.ResourceSet.class);
+            addedResourceSet = restTemplate.postForObject("http://" + inventoryServiceHost + ":" + inventoryServicePort + "/rest-service/inventory/resource/set", resourceSet, edu.kit.pms.mm.core.ResourceSet.class);
         } catch (RestClientException e) {
             return false;
         }

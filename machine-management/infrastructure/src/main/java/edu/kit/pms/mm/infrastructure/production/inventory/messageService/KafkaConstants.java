@@ -2,7 +2,7 @@ package edu.kit.pms.mm.infrastructure.production.inventory.messageService;
 
 import java.time.Duration;
 
-public interface IKafkaConstants {
+public interface KafkaConstants {
 
     String KAFKA_BROKERS = "134.3.17.150:9092";
 
