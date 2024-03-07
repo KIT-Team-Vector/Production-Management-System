@@ -13,8 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class AddInventoryImpl implements AddInventory {
-
-    public static final String INVENTORY_SET_REQUEST_URL = "http://localhost:8080/rest-service/inventory/resource/set";
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -29,9 +27,11 @@ public class AddInventoryImpl implements AddInventory {
     @Override
     public boolean add(ResourceSet resourceSet) {
         ResourceSet addedResourceSet;
+        String inventoryServiceHost = System.getenv("INVENTORY_HOST");
+        String inventoryServicePort = System.getenv("INVENTORY_PORT");
 
         try {
-            addedResourceSet = restTemplate.postForObject(INVENTORY_SET_REQUEST_URL, resourceSet, edu.kit.pms.mm.core.ResourceSet.class);
+            addedResourceSet = restTemplate.postForObject("http://" + inventoryServiceHost +":" + inventoryServicePort + "/rest-service/inventory/resource/set", resourceSet, edu.kit.pms.mm.core.ResourceSet.class);
         } catch (RestClientException e) {
             return false;
         }

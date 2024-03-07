@@ -25,11 +25,11 @@ public class MachineHandler implements MachineRepository<OneToOneMachine> {
     private OneToOneMachineRepository machineRepository;
 
     @PostMapping("/machines/add")
-    public @ResponseBody boolean addMachine(@RequestParam int machineId, @RequestParam int inputResourceId, @RequestParam int outputResourceId) {
+    public @ResponseBody boolean addMachine(@RequestParam int machineId, @RequestParam int inputResourceId, @RequestParam(defaultValue = "") String inputResourceName, @RequestParam int outputResourceId, @RequestParam(defaultValue = "") String outputResourceName) {
         OneToOneMachine machine = new OneToOneMachine();
         machine.setId(machineId);
-        machine.setInput(inputResourceId);
-        machine.setOutput(outputResourceId);
+        machine.setInput(new ResourceImpl(inputResourceId, (inputResourceName.isBlank() ? null : inputResourceName)));
+        machine.setOutput(new ResourceImpl(outputResourceId, (outputResourceName.isBlank() ? null : outputResourceName)));
 
         return add(machine);
     }

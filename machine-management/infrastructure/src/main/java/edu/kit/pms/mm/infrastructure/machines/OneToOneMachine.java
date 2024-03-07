@@ -3,6 +3,7 @@ package edu.kit.pms.mm.infrastructure.machines;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.kit.pms.mm.core.Machine;
 import edu.kit.pms.mm.core.Resource;
+import edu.kit.pms.mm.core.ResourceSet;
 import edu.kit.pms.mm.core.exceptions.ProductionException;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceSetImpl;
@@ -18,7 +19,9 @@ public class OneToOneMachine implements Machine {
     @Id
     private Integer id;
     private int inputResourceId;
+    private String inputResourceName = null;
     private int outputResourceId;
+    private String outputResourceName = null;
 
     @Override
     public int getId() {
@@ -35,11 +38,12 @@ public class OneToOneMachine implements Machine {
 
     @Override
     public Resource getInput() {
-        return new ResourceImpl(inputResourceId);
+        return new ResourceImpl(inputResourceId, inputResourceName);
     }
 
     public void setInput(Resource newInputResource) {
         setInput(newInputResource.id());
+        inputResourceName = newInputResource.name();
     }
 
     public void setInput(int newInputResourceId) {
@@ -48,11 +52,12 @@ public class OneToOneMachine implements Machine {
 
     @Override
     public Resource getOutput() {
-        return new ResourceImpl(outputResourceId);
+        return new ResourceImpl(outputResourceId, outputResourceName);
     }
 
     public void setOutput(Resource newOutputResource) {
         setOutput(newOutputResource.id());
+        outputResourceName = newOutputResource.name();
     }
 
     public void setOutput(int newOutputResourceId) {
@@ -65,9 +70,9 @@ public class OneToOneMachine implements Machine {
     }
 
     @Override
-    public edu.kit.pms.mm.core.ResourceSet produce(edu.kit.pms.mm.core.ResourceSet providedResourceSet) throws ProductionException {
+    public ResourceSet produce(ResourceSet providedResourceSet) throws ProductionException {
         if (providedResourceSet.resource().id() == inputResourceId) {
-            Resource outputResource = new ResourceImpl(outputResourceId);
+            Resource outputResource = new ResourceImpl(outputResourceId, outputResourceName);
             int outputResourceAmount = providedResourceSet.amount() * PRODUCTION_MULTIPLIER;
             return new ResourceSetImpl(outputResource, outputResourceAmount);
         } else {
