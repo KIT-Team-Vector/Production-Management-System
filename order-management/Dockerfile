@@ -17,7 +17,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /usr/src/app
 
 # Copy the entire target folder from the build stage
-COPY --from=build /usr/src/app/inventory/target .
+COPY --from=build /usr/src/app/rest-service/target .
 
 # Expose port 8080
 EXPOSE 8080
