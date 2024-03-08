@@ -1,5 +1,6 @@
 package edu.kit.ordermanager.kafka.producer;
 
+import edu.kit.ordermanager.entities.ResourceSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -8,10 +9,10 @@ import org.springframework.stereotype.Component;
 public class MessageProducer {
 
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<Long, ResourceSet> kafkaTemplate;
 
-    public void sendMessage(String topic, String message) {
-        kafkaTemplate.send(topic, message);
+    public void sendMessage(String topic, Long key, ResourceSet resourceSet) {
+        kafkaTemplate.send(topic, key, resourceSet);
     }
 
 }
