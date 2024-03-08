@@ -3,6 +3,7 @@ package edu.kit.ordermanager.kafka.producer;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.kafka.Greeting;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -21,7 +22,7 @@ public class KafkaProducerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ProducerFactory<String, String> producerFactory() {
+    public ProducerFactory<Long, ResourceSet> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -30,7 +31,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, String> kafkaTemplate() {
+    public KafkaTemplate<Long, ResourceSet> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
