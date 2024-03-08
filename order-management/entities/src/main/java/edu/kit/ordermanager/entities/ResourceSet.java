@@ -8,12 +8,12 @@ public class ResourceSet {
 
     private int amount;
 
-    public ResourceSet (@JsonProperty("ressource") Resource resource, @JsonProperty("amount") int amount) {
+    public ResourceSet (@JsonProperty("resource") Resource resource, @JsonProperty("amount") int amount) {
         this.resource = resource;
         this.amount = amount;
     }
 
-    public Resource getRessource() {
+    public Resource getResource() {
         return resource;
     }
 
