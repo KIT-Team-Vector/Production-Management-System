@@ -3,9 +3,7 @@ package edu.kit.pms.ordermanager.app;
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
 
 public class PlaceOrderUseCase {
 
@@ -27,7 +25,7 @@ public class PlaceOrderUseCase {
 
         if(resourceSet.getAmount() >= order.getAmount()) {
             //If amount of resources in inventory is enough take them out.
-            //TODO: resourceSet.setAmount(order.getAmount()); TOBIN Fragen ob amount geändert werden muss oder er es intern selber verwaltet?
+            resourceSet.setAmount(order.getAmount());
             restServiceController.decreaseResourceSetRequest(resourceSet);
             return true;
         }

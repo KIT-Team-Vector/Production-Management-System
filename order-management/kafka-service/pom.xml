@@ -29,5 +29,10 @@
             <artifactId>adapters</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>edu.kit.pms</groupId>
+            <artifactId>entities</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
