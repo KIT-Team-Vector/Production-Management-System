@@ -6,7 +6,6 @@ import edu.kit.ordermanager.entities.Task;
 import edu.kit.ordermanager.handlers.IMessageHandler;
 import edu.kit.pms.ordermanager.app.IRestServiceController;
 import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
-import jakarta.websocket.MessageHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 
-@RestController
-@RequestMapping("/order")
 public class RestServiceController implements IRestServiceController {
 
-    private PlaceOrderUseCase placeOrder;
-
+    private IMessageHandler messageHandler;
     private final String inventoryApiUrl = "http://134.3.17.150:9092/rest-service/inventory/resource/set";
     private final String machineApiUrl = "http://<host>:<port>/pms/mm/checkMachine";
 
@@ -31,26 +27,10 @@ public class RestServiceController implements IRestServiceController {
 
     private final String startProductionApiUrl = "http://<host>:<port>/pms/mm/produce";
 
-    public RestServiceController() {
+    public RestServiceController(IMessageHandler messageHandler) {
 
-        placeOrder = new PlaceOrderUseCase(this);
+        this.messageHandler = messageHandler;
     }
-
-    @GetMapping("/index")
-    public String index() {
-        return "Hello i am the real one one one";
-    }
-    /*public List<Task> index() {
-        return this.taskRepository.findAll();
-    }*/
-
-    @GetMapping("/place")
-    public void placeOrder(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "amount") int amount) {
-        Resource resource = new Resource(id, name);
-        Task order = new Task(resource, amount);
-        placeOrder.processOrder(order);
-    }
-
 
     @Override
     public ResponseEntity<ResourceSet> checkInventory(Task order) {
@@ -82,6 +62,6 @@ public class RestServiceController implements IRestServiceController {
     }
 
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
-
+        return true;
     }
 }
