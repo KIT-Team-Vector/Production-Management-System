@@ -15,12 +15,19 @@ import java.util.Random;
 public class RestServiceController implements IRestServiceController {
 
     private IMessageHandler messageHandler;
-    private final String inventoryApiUrl = "http://134.3.17.150:9092/rest-service/inventory/resource/set";
-    private final String machineApiUrl = "http://<host>:<port>/pms/mm/checkMachine";
+    String inventoryServiceHost = System.getenv("INVENTORY_HOST");
 
-    private final String requiredResourceApiUrl = "http://<host>:<port>/pms/mm/requiredResource";
+    String inventoryServicePort = System.getenv("INVENTORY_PORT");
 
-    private final String startProductionApiUrl = "http://<host>:<port>/pms/mm/produce";
+    String machineServiceHost = System.getenv("MACHINE_HOST");
+
+    String machineServicePort = System.getenv("MACHINE_PORT");
+    private final String checkInventoryUrl = "http://" + inventoryServiceHost+ ":" +inventoryServicePort + "/rest-service/inventory/resource/set";
+    private final String checkMachineUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/checkMachine";
+
+    private final String requiredResourceUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/requiredResource";
+
+    private final String startProductionUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/produce";
 
     public RestServiceController(IMessageHandler messageHandler) {
 
@@ -31,28 +38,28 @@ public class RestServiceController implements IRestServiceController {
     public ResponseEntity<ResourceSet> checkInventory(Task order) {
         int resourceID = order.getResource().getId();
         RestTemplate inventoryTemplate = new RestTemplate();
-        String url = inventoryApiUrl + "/" + resourceID;
+        String url = checkInventoryUrl + "/" + resourceID;
         return inventoryTemplate.exchange(url, HttpMethod.GET, null, ResourceSet.class);
     }
 
     @Override
     public boolean checkAvailableMachinces(int resourceId) {
         RestTemplate machineTemplate = new RestTemplate();
-        String url = machineApiUrl + "/" + resourceId;
+        String url = checkMachineUrl + "/" + resourceId;
         return Boolean.TRUE.equals(machineTemplate.getForObject(url, Boolean.class));
     }
 
     @Override
     public Resource findRequiredResource(int resourceId) {
         RestTemplate requiredResourceTemplate = new RestTemplate();
-        String url = requiredResourceApiUrl + "/" + resourceId;
+        String url = requiredResourceUrl + "/" + resourceId;
         return requiredResourceTemplate.getForObject(url, Resource.class);
     }
 
     @Override
     public boolean startProduction(int resourceId) {
         RestTemplate startProductionTemplate = new RestTemplate();
-        String url = startProductionApiUrl + "/" + resourceId;
+        String url = startProductionUrl + "/" + resourceId;
         return Boolean.TRUE.equals(startProductionTemplate.getForObject(url, Boolean.class));
     }
 
