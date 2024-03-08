@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 public class OrderManagerController {
     private PlaceOrderUseCase placeOrder;
+
+    @Autowired
     private MessageHandler messageHandler;
 
     public OrderManagerController() {
-        messageHandler = new MessageHandler();
         RestServiceController restServiceController = new RestServiceController(messageHandler);
         placeOrder = new PlaceOrderUseCase(restServiceController);
     }
