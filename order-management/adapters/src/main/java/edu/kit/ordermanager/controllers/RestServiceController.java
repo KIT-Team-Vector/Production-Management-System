@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Random;
@@ -55,10 +56,9 @@ public class RestServiceController implements IRestServiceController {
     }
 
     @Override
-    public boolean startProduction(int resourceId) {
+    public boolean startProduction(Resource resource) {
         RestTemplate startProductionTemplate = new RestTemplate();
-        String url = startProductionUrl + "/" + resourceId;
-        return Boolean.TRUE.equals(startProductionTemplate.getForObject(url, Boolean.class));
+        return Boolean.TRUE.equals(startProductionTemplate.getForObject(startProductionUrl, Boolean.class, resource));
     }
 
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
