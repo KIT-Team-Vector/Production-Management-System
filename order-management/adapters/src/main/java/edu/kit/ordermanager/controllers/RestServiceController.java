@@ -38,7 +38,7 @@ public class RestServiceController implements IRestServiceController {
         int resourceID = order.getResource().getId();
         RestTemplate inventoryTemplate = new RestTemplate();
         String url = checkInventoryUrl + "/" + resourceID;
-        return inventoryTemplate.exchange(url, HttpMethod.GET, null, ResourceSet.class);
+        return inventoryTemplate.getForEntity(url, ResourceSet.class);
     }
 
     @Override
