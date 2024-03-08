@@ -2,6 +2,7 @@ package edu.kit.ordermanager.rest.controller;
 
 import edu.kit.ordermanager.controllers.RestServiceController;
 import edu.kit.ordermanager.entities.Resource;
+import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
 import edu.kit.ordermanager.kafka.handler.MessageHandler;
 import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Random;
 
 @RestController
 @RequestMapping("/order")
@@ -26,7 +29,9 @@ public class OrderManagerController {
 
     @GetMapping("/index")
     public String index() {
-        messageHandler.sendDecreaseResourceSetRequest("decreasing");
+        Resource resource = new Resource(1,"steel");
+        ResourceSet resourceSet = new ResourceSet(resource, 5);
+        messageHandler.sendDecreaseResourceSetRequest(new Random().nextLong(), resourceSet);
         return "Request send";
     }
     /*public List<Task> index() {
