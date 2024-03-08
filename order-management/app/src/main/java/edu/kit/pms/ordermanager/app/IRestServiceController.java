@@ -13,7 +13,7 @@ public interface IRestServiceController {
 
     public Resource findRequiredResource(int resourceId);
 
-    public boolean startProduction(Resource resource);
+    public boolean startProduction(ResourceSet resourceSet);
 
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet);
 }

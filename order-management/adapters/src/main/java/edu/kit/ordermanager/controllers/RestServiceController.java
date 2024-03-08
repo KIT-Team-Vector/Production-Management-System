@@ -56,9 +56,9 @@ public class RestServiceController implements IRestServiceController {
     }
 
     @Override
-    public boolean startProduction(Resource resource) {
+    public boolean startProduction(ResourceSet resourceSet) {
         RestTemplate startProductionTemplate = new RestTemplate();
-        return Boolean.TRUE.equals(startProductionTemplate.getForObject(startProductionUrl, Boolean.class, resource));
+        return Boolean.TRUE.equals(startProductionTemplate.postForObject(startProductionUrl, resourceSet, Boolean.class));
     }
 
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
