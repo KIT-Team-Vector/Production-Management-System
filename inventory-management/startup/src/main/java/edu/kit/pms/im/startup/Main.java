@@ -1,9 +1,10 @@
 package edu.kit.pms.im.startup;
 
 import org.apache.kafka.common.serialization.BooleanSerializer;
-import edu.kit.pms.im.common.concepts.ResourceSetImpl;
+
 import edu.kit.pms.im.domain.ResourceSetRepository;
 import edu.kit.pms.im.domain.InventoryManagementError;
+import edu.kit.pms.im.domain.ResourceSetImpl;
 import edu.kit.pms.im.common.services.MessageReceiverService;
 import edu.kit.pms.im.database.*;
 import edu.kit.pms.im.inventory.InventoryManager;

@@ -20,7 +20,7 @@
     </dependency>
     <dependency>
     	<groupId>edu.kit.pms</groupId>
-    	<artifactId>common</artifactId>
+    	<artifactId>domain-model</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>

@@ -6,23 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>common</artifactId>
-  
   <dependencies>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.16.0</version>
-		</dependency>
-		<dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.16.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>2.16.0</version>
-        </dependency>
 		<dependency>
 			<groupId>edu.kit.pms</groupId>
 			<artifactId>domain-model</artifactId>
@@ -34,6 +18,4 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
   </dependencies>
-
-
 </project>

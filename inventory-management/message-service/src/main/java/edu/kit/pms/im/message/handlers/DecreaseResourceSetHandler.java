@@ -4,8 +4,8 @@ import org.apache.kafka.clients.consumer.Consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 
-import edu.kit.pms.im.common.concepts.ResourceSetImpl;
 import edu.kit.pms.im.common.controllers.InventoryController;
+import edu.kit.pms.im.domain.ResourceSetImpl;
 import edu.kit.pms.im.message.kafka.IKafkaConstants;
 import edu.kit.pms.im.message.kafka.clients.ConsumerFactory;
 import edu.kit.pms.im.message.serialization.ResourceSetDeserializer;

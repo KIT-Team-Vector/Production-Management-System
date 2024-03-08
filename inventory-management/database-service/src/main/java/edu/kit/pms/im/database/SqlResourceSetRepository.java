@@ -2,19 +2,19 @@ package edu.kit.pms.im.database;
 
 import java.sql.Connection;
 
+
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import edu.kit.pms.im.domain.InventoryManagementError;
+import edu.kit.pms.im.domain.ResourceImpl;
 import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.domain.ResourceSetImpl;
 import edu.kit.pms.im.domain.ResourceSetRepository;
-import edu.kit.pms.im.common.concepts.ResourceImpl;
-import edu.kit.pms.im.common.concepts.ResourceSetImpl;
 
 public class SqlResourceSetRepository implements ResourceSetRepository {
 	

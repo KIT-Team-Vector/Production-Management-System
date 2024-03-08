@@ -1,9 +1,10 @@
 package assets;
 
-import edu.kit.pms.im.common.concepts.ResourceSetImpl;
 import edu.kit.pms.im.common.controllers.InventoryController;
+
 import edu.kit.pms.im.common.controllers.InventoryControllerImpl;
 import edu.kit.pms.im.domain.ResourceSet;
+import edu.kit.pms.im.domain.ResourceSetImpl;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;

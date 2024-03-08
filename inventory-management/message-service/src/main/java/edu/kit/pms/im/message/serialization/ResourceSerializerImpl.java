@@ -6,7 +6,7 @@ import org.apache.kafka.common.serialization.Serializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.kit.pms.im.common.concepts.ResourceImpl;
+import edu.kit.pms.im.domain.ResourceImpl;
 
 public class ResourceSerializerImpl implements Serializer<ResourceImpl> {
 

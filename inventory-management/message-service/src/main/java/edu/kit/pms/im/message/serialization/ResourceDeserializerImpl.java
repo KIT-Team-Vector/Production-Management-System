@@ -8,7 +8,7 @@ import org.apache.kafka.common.serialization.Deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.kit.pms.im.common.concepts.ResourceImpl;
+import edu.kit.pms.im.domain.ResourceImpl;
 
 
 public class ResourceDeserializerImpl implements Deserializer<ResourceImpl> {

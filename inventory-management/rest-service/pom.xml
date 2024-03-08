@@ -45,6 +45,12 @@
 		</dependency>
 		<dependency>
 			<groupId>edu.kit.pms</groupId>
+			<artifactId>domain-model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>edu.kit.pms</groupId>
 			<artifactId>common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>provided</scope>
