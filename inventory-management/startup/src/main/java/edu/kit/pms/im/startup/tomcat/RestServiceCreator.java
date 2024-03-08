@@ -11,6 +11,7 @@ import org.apache.tomcat.util.scan.StandardJarScanner;
 import edu.kit.pms.im.startup.resourceLoader.WarLoader;
 
 public class RestServiceCreator {
+	private static final int PORT = 8080; 
 	private static final String BASE_DIR = "temp";
 	private static final String APP_BASE = ".";
 	private static final String CONTEXT_PATH = "rest-service"; 
@@ -23,7 +24,7 @@ public class RestServiceCreator {
 					// Create an instance of Tomcat
 					Tomcat tomcat = new Tomcat();
 					// Set the port number
-					tomcat.setPort(8080);
+					tomcat.setPort(PORT);
 					// specify workspace of tomcat instance
 					tomcat.setBaseDir(BASE_DIR);
 					// root is set to host
