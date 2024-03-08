@@ -5,15 +5,18 @@ import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
 import edu.kit.ordermanager.handlers.IMessageHandler;
 import edu.kit.pms.ordermanager.app.IRestServiceController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Random;
 
-
+@Controller
 public class RestServiceController implements IRestServiceController {
 
+    @Autowired
     private IMessageHandler messageHandler;
     String inventoryServiceHost = System.getenv("INVENTORY_HOST");
 
@@ -28,11 +31,6 @@ public class RestServiceController implements IRestServiceController {
     private final String requiredResourceUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/requiredResource";
 
     private final String startProductionUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/produce";
-
-    public RestServiceController(IMessageHandler messageHandler) {
-
-        this.messageHandler = messageHandler;
-    }
 
     @Override
     public ResponseEntity<ResourceSet> checkInventory(Task order) {
