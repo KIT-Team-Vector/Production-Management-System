@@ -1,13 +1,13 @@
-package edu.kit.pms.ordermanager.controllers;
-
-import java.util.List;
+package edu.kit.ordermanager.controllers;
 
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
+import edu.kit.ordermanager.handlers.IMessageHandler;
 import edu.kit.pms.ordermanager.app.IRestServiceController;
 import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
-import jakarta.persistence.criteria.Order;
+import jakarta.websocket.MessageHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.kit.ordermanager.rest.repository.TaskRepository;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -23,7 +22,6 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/order")
 public class RestServiceController implements IRestServiceController {
 
-    private TaskRepository taskRepository;
     private PlaceOrderUseCase placeOrder;
 
     private final String inventoryApiUrl = "http://134.3.17.150:9092/rest-service/inventory/resource/set";
@@ -33,22 +31,25 @@ public class RestServiceController implements IRestServiceController {
 
     private final String startProductionApiUrl = "http://<host>:<port>/pms/mm/produce";
 
-    public RestServiceController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public RestServiceController() {
+
         placeOrder = new PlaceOrderUseCase(this);
+        messageHandler = new MessageHandler();
     }
 
     @GetMapping("/index")
-    public List<Task> index() {
-        return this.taskRepository.findAll();
+    public String index() {
+        return "Hello i am the real one one one";
     }
+    /*public List<Task> index() {
+        return this.taskRepository.findAll();
+    }*/
 
     @GetMapping("/place")
     public void placeOrder(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "amount") int amount) {
         Resource resource = new Resource(id, name);
         Task order = new Task(resource, amount);
         placeOrder.processOrder(order);
-        this.taskRepository.save(new Task(resource, amount));
     }
 
 
@@ -79,5 +80,9 @@ public class RestServiceController implements IRestServiceController {
         RestTemplate startProductionTemplate = new RestTemplate();
         String url = startProductionApiUrl + "/" + resourceId;
         return Boolean.TRUE.equals(startProductionTemplate.getForObject(url, Boolean.class));
+    }
+
+    public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
+
     }
 }
