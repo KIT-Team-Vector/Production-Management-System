@@ -42,7 +42,7 @@ public class PlaceOrderUseCase {
                 Task childTask = new Task(resource, difference);
 
                if (this.processOrder(childTask, false)) {
-                   return this.restServiceController.startProduction(new ResourceSet(resource, difference));
+                   return this.restServiceController.startProduction(new ResourceSet(order.getResource(), difference));
                }
             }
         }
