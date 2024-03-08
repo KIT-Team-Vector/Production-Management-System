@@ -15,11 +15,12 @@
     <name>order-manager</name>
 
     <modules>
-        <module>kafka-producer</module>
+        <module>kafka-service</module>
 		<module>rest-service</module>
 		<module>entities</module>
 		<module>adapters</module>
         <module>app</module>
+        <module>service</module>
     </modules>
 
     <properties>
