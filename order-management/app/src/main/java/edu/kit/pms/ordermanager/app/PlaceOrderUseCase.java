@@ -43,7 +43,7 @@ public class PlaceOrderUseCase {
 
                if (this.processOrder(childTask, false)) {
                    if(this.restServiceController.startProduction(new ResourceSet(order.getResource(), difference)) && firstRun) {
-                       restServiceController.decreaseResourceSetRequest(resourceSet);
+                       restServiceController.decreaseResourceSetRequest(new ResourceSet(order.getResource(), order.getAmount()));
                    }
                }
             }
