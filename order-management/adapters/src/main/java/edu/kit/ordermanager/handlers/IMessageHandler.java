@@ -4,7 +4,5 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 public interface IMessageHandler {
 
-    public void setContext(ConfigurableApplicationContext context);
-
     public boolean sendDecreaseResourceSetRequest(String message);
 }
