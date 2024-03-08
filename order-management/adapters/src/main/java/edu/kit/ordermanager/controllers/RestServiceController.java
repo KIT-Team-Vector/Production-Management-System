@@ -5,14 +5,8 @@ import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
 import edu.kit.ordermanager.handlers.IMessageHandler;
 import edu.kit.pms.ordermanager.app.IRestServiceController;
-import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.client.RestTemplate;
 
@@ -62,6 +56,6 @@ public class RestServiceController implements IRestServiceController {
     }
 
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
-        return true;
+        return messageHandler.sendDecreaseResourceSetRequest("I am decreasing");
     }
 }

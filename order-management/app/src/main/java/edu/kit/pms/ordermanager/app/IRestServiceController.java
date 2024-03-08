@@ -14,4 +14,6 @@ public interface IRestServiceController {
     public Resource findRequiredResource(int resourceId);
 
     public boolean startProduction(int resourceId);
+
+    public boolean decreaseResourceSetRequest(ResourceSet resourceSet);
 }

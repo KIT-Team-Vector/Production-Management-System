@@ -26,13 +26,15 @@ public class PlaceOrderUseCase {
         ResourceSet resourceSet = resourceSetEntity.getBody();
 
         if(resourceSet.getAmount() >= order.getAmount()) {
-            //TODO abbuchen vom Inventory durch consumen der Schnittstelle
+            //If amount of resources in inventory is enough take them out.
+            //TODO: resourceSet.setAmount(order.getAmount()); TOBIN Fragen ob amount geändert werden muss oder er es intern selber verwaltet?
+            restServiceController.decreaseResourceSetRequest(resourceSet);
             return true;
         }
 
         if(resourceSet.getAmount() < order.getAmount()) {
             int difference = order.getAmount() - resourceSet.getAmount();
-            //TODO: Consume API of maschine manager and ask for machine to produce the difference amount of the requested resource
+            //Consume API of maschine manager and ask for machines to produce the difference amount of the requested resource
             boolean machineAvailable = this.restServiceController.checkAvailableMachinces(order.getResource().getId());
 
             if(Boolean.TRUE.equals(machineAvailable)) {

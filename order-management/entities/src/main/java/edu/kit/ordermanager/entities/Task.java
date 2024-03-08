@@ -1,40 +1,43 @@
 package edu.kit.ordermanager.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
 public class Task {
 
+    private Long id;
+
+    private Resource resource;
+
+    //private Resource resource;
+
+    private int amount;
 
     public Task() {
 
     }
 
-    public Task(String resource, int amount) {
+    public Task(Resource resource, int amount) {
         this.resource = resource;
         this.amount = amount;
     }
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private String resource;
 
-    private int amount;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getResource() {
+    /*public Resource getResource() {
         return this.resource;
-    }
+    }*/
 
     public int getAmount() {
         return this.amount;
+    }
+
+    public Resource getResource() {
+        return this.resource;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
