@@ -5,6 +5,7 @@ import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.Task;
 import edu.kit.ordermanager.kafka.handler.MessageHandler;
 import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,19 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 public class OrderManagerController {
     private PlaceOrderUseCase placeOrder;
-
     private MessageHandler messageHandler;
 
     public OrderManagerController() {
         messageHandler = new MessageHandler();
         RestServiceController restServiceController = new RestServiceController(messageHandler);
         placeOrder = new PlaceOrderUseCase(restServiceController);
-
     }
 
     @GetMapping("/index")
     public String index() {
-        return "Hello i am the new edited";
+        messageHandler.sendDecreaseResourceSetRequest("decreasing");
+        return "Request send";
     }
     /*public List<Task> index() {
         return this.taskRepository.findAll();
