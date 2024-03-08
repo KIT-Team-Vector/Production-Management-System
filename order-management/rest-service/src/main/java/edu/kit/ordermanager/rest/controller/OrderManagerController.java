@@ -22,15 +22,17 @@ public class OrderManagerController {
     @Autowired
     private MessageHandler messageHandler;
 
-    public OrderManagerController() {
-        RestServiceController restServiceController = new RestServiceController(messageHandler);
+    RestServiceController restServiceController;
+
+    public OrderManagerController(@Autowired RestServiceController restServiceController) {
+        this.restServiceController = restServiceController;
         placeOrder = new PlaceOrderUseCase(restServiceController);
     }
 
     @GetMapping("/index")
     public String index() {
-        Resource resource = new Resource(1,"steel");
-        ResourceSet resourceSet = new ResourceSet(resource, 5);
+        Resource resource = new Resource(2,"wood");
+        ResourceSet resourceSet = new ResourceSet(resource, 1);
         messageHandler.sendDecreaseResourceSetRequest(new Random().nextLong(), resourceSet);
         return "Request send";
     }
