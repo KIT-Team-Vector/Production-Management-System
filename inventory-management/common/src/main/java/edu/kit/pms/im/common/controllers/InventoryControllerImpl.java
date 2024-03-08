@@ -1,6 +1,6 @@
 package edu.kit.pms.im.common.controllers;
 import edu.kit.pms.im.common.services.MessageSenderService;
-import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSet;
 import edu.kit.pms.im.inventory.InventoryManager;
 
@@ -46,7 +46,7 @@ public class InventoryControllerImpl implements InventoryController {
 	public ResourceSet addResourceSet(ResourceSet resourceSet) {
 		try {
 		return inventoryManager.addResourceSet(resourceSet);
-		} catch (MicroserviceError e) {
+		} catch (InventoryManagementError e) {
 			e.printStackTrace();
 			messageSenderService.sendError(null, e);
 			return null;
@@ -63,7 +63,7 @@ public class InventoryControllerImpl implements InventoryController {
 		boolean success = false;
 		try {
 			success = inventoryManager.decreaseResourceSet(resourceSet);
-		} catch (MicroserviceError e) {
+		} catch (InventoryManagementError e) {
 			e.printStackTrace();
 			messageSenderService.sendError(key, e);
 		} finally {

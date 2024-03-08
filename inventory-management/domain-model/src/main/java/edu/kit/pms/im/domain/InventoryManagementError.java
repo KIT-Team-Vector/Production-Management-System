@@ -1,6 +1,6 @@
 package edu.kit.pms.im.domain;
 
-public class MicroserviceError extends Error {
+public class InventoryManagementError extends Error {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -10,13 +10,13 @@ public class MicroserviceError extends Error {
 
 	private String message;
 	
-	public MicroserviceError(String type, String message, int orderID) {
+	public InventoryManagementError(String type, String message, int orderID) {
 		this.type = type;
 		this.message = message;
 		this.orderID = orderID;
 	}
 	
-	public MicroserviceError(String type, String message) {
+	public InventoryManagementError(String type, String message) {
 		this.type = type;
 		this.message = message;
 	}

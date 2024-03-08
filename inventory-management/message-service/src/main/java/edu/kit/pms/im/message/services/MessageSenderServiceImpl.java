@@ -8,18 +8,18 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.BooleanSerializer;
 
 import edu.kit.pms.im.common.services.MessageSenderService;
-import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.message.kafka.IKafkaConstants;
 import edu.kit.pms.im.message.kafka.clients.ProducerFactory;
 import edu.kit.pms.im.message.serialization.MicroserviceErrorSerializer;
 
 public class MessageSenderServiceImpl implements MessageSenderService {
 	
-	private Producer<Long, MicroserviceError> errorProducer;
+	private Producer<Long, InventoryManagementError> errorProducer;
 	private Producer<Long, Boolean> booleanProducer;
 
 	public MessageSenderServiceImpl(
-			ProducerFactory<MicroserviceError, MicroserviceErrorSerializer> errorProducerFactory,
+			ProducerFactory<InventoryManagementError, MicroserviceErrorSerializer> errorProducerFactory,
 			ProducerFactory<Boolean, BooleanSerializer> booleanProducerFactory) {
 		
 		errorProducer = errorProducerFactory.create();
@@ -27,9 +27,9 @@ public class MessageSenderServiceImpl implements MessageSenderService {
 	}
 
 	@Override
-	public void sendError(Long key, MicroserviceError mError) {
+	public void sendError(Long key, InventoryManagementError mError) {
 
-		ProducerRecord<Long, MicroserviceError> record = new ProducerRecord<Long, MicroserviceError>(
+		ProducerRecord<Long, InventoryManagementError> record = new ProducerRecord<Long, InventoryManagementError>(
 				IKafkaConstants.TOPIC_Error, key, mError);
 
 		try {

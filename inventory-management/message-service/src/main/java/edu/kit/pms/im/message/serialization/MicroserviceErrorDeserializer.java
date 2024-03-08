@@ -6,20 +6,20 @@ import org.apache.kafka.common.serialization.Deserializer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.domain.InventoryManagementError;
 
-public class MicroserviceErrorDeserializer implements Deserializer<MicroserviceError> {
+public class MicroserviceErrorDeserializer implements Deserializer<InventoryManagementError> {
 	
 	@Override
 	public void configure(Map<String, ?> configs, boolean isKey) {
 	}
 
 	@Override
-	public MicroserviceError deserialize(String topic, byte[] data) {
+	public InventoryManagementError deserialize(String topic, byte[] data) {
 		ObjectMapper mapper = new ObjectMapper();
-		MicroserviceError object = null;
+		InventoryManagementError object = null;
 		try {
-			object = mapper.readValue(data, MicroserviceError.class);
+			object = mapper.readValue(data, InventoryManagementError.class);
 		} catch (Exception exception) {
 			System.out.println("Error in deserializing bytes " + exception);
 		}

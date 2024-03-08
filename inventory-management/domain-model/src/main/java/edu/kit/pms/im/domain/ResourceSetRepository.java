@@ -12,6 +12,6 @@ public interface ResourceSetRepository {
 	
 	public ResourceSet add(String name, int amount);
 	
-	public boolean updateAmount(int id, int deltaAmount) throws MicroserviceError;
+	public boolean updateAmount(int id, int deltaAmount) throws InventoryManagementError;
 	
 }

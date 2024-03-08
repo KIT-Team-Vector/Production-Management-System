@@ -15,7 +15,7 @@
 		<module>message-service</module>
 		<module>database-service</module>
 		<module>domain-model</module>
-		<module>inventory</module>
+		<module>startup</module>
 		<module>inventory-manager</module>
 		<module>common</module>
 	</modules>

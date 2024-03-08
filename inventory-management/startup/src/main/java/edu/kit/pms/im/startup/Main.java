@@ -1,12 +1,13 @@
-package edu.kit.pms.im.inventory;
+package edu.kit.pms.im.startup;
 
 import org.apache.kafka.common.serialization.BooleanSerializer;
 import edu.kit.pms.im.common.concepts.ResourceSetImpl;
 import edu.kit.pms.im.domain.ResourceSetRepository;
-import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.common.services.MessageReceiverService;
 import edu.kit.pms.im.database.*;
-import edu.kit.pms.im.inventory.tomcat.RestServiceCreator;
+import edu.kit.pms.im.inventory.InventoryManager;
+import edu.kit.pms.im.inventory.InventoryManagerImpl;
 import edu.kit.pms.im.message.handlers.*;
 import edu.kit.pms.im.message.kafka.clients.ConsumerFactory;
 import edu.kit.pms.im.message.kafka.clients.ProducerFactory;
@@ -15,9 +16,13 @@ import edu.kit.pms.im.message.kafka.clients.SimpleProducerFactory;
 import edu.kit.pms.im.message.serialization.MicroserviceErrorSerializer;
 import edu.kit.pms.im.message.serialization.ResourceSetDeserializer;
 import edu.kit.pms.im.message.services.*;
+import edu.kit.pms.im.startup.tomcat.RestServiceCreator;
 import edu.kit.pms.im.common.services.*;
 import edu.kit.pms.im.common.controllers.*;
 
+/**
+ * 
+ */
 public class Main {
 
 	public static void main(String[] args) {
@@ -49,7 +54,7 @@ public class Main {
 	}
 
 	private static MessageSenderService createMessageSenderService() {
-		ProducerFactory<MicroserviceError, MicroserviceErrorSerializer> errorProducer = new SimpleProducerFactory<MicroserviceError, MicroserviceErrorSerializer>(
+		ProducerFactory<InventoryManagementError, MicroserviceErrorSerializer> errorProducer = new SimpleProducerFactory<InventoryManagementError, MicroserviceErrorSerializer>(
 				MicroserviceErrorSerializer.class);
 		ProducerFactory<Boolean, BooleanSerializer> booleanProducer = new SimpleProducerFactory<Boolean, BooleanSerializer>(
 				BooleanSerializer.class);
@@ -72,43 +77,41 @@ public class Main {
 		return new RestServiceCreator().createRestService(mainClassLoader);
 	};
 
-	/**
-	 * private static void sendTestRequests() { Timer timer = new Timer();
-	 * 
-	 * timer.schedule(new TimerTask() {
-	 * 
-	 * @Override public void run() { Producer<Long, ResourceSetImpl> updateProducer
-	 *           = new SimpleProducerFactory<ResourceSetImpl,
-	 *           ResourceSetSerializer>( ResourceSetSerializer.class).create();
-	 *           ProducerRecord<Long, ResourceSetImpl> record = new
-	 *           ProducerRecord<Long, ResourceSetImpl>(
-	 *           IKafkaConstants.TOPIC_DECREASE_RESOURCE_SET_REQUEST, 1L, new
-	 *           ResourceSetImpl(new ResourceImpl(11, "Test"), 1000)); try {
-	 *           updateProducer.send(record).get(); } catch (InterruptedException e)
-	 *           { // TODO Auto-generated catch block e.printStackTrace(); } catch
-	 *           (ExecutionException e) { // TODO Auto-generated catch block
-	 *           e.printStackTrace(); } } }, 10000); // 3000 milliseconds delay (3
-	 *           seconds)
-	 * 
-	 *           }
-	 * 
-	 *           private static void receiveTestRequests() { Thread serverThread =
-	 *           new Thread(() -> { // listen for rest requests
-	 *           ConsumerFactory<Boolean, BooleanDeserializer> consumerFactory = new
-	 *           SimpleConsumerFactory<Boolean, BooleanDeserializer>(
-	 *           BooleanDeserializer.class);
-	 *           org.apache.kafka.clients.consumer.Consumer<Long, Boolean> consumer
-	 *           = consumerFactory
-	 *           .create(IKafkaConstants.TOPIC_DECREASE_RESOURCE_SET_RESPONSE);
-	 *           while (true) { ConsumerRecords<Long, Boolean> t =
-	 *           consumer.poll(Duration.ofMillis(1000)); t.forEach(record -> {
-	 *           System.out.println(record.value().booleanValue());
-	 * 
-	 *           });
-	 * 
-	 *           } }); serverThread.start(); }
-	 * 
-	 **/
+//	private static void sendTestRequests() { Timer timer = new Timer();
+//	  
+//	  timer.schedule(new TimerTask() {
+//	  
+//	  @Override public void run() { Producer<Long, ResourceSetImpl> updateProducer
+//	            = new SimpleProducerFactory<ResourceSetImpl,
+//	           ResourceSetSerializer>( ResourceSetSerializer.class).create();
+//	            ProducerRecord<Long, ResourceSetImpl> record = new
+//	            ProducerRecord<Long, ResourceSetImpl>(
+//	            IKafkaConstants.TOPIC_DECREASE_RESOURCE_SET_REQUEST, 1L, new
+//	            ResourceSetImpl(new ResourceImpl(11, "Test"), 1000)); try {
+//	            updateProducer.send(record).get(); } catch (InterruptedException e)
+//	            { // TODO Auto-generated catch block e.printStackTrace(); } catch
+//	             e.printStackTrace(); } } }, 10000); // 3000 milliseconds delay (3
+//	          seconds)
+//	 
+//	            }
+//
+//	private static void receiveTestRequests() {
+//		Thread serverThread = new Thread(() -> { // listen for rest requests
+//			ConsumerFactory<Boolean, BooleanDeserializer> consumerFactory = new SimpleConsumerFactory<Boolean, BooleanDeserializer>(
+//					BooleanDeserializer.class);
+//			org.apache.kafka.clients.consumer.Consumer<Long, Boolean> consumer = consumerFactory
+//					.create(IKafkaConstants.TOPIC_DECREASE_RESOURCE_SET_RESPONSE);
+//			while (true) {
+//				ConsumerRecords<Long, Boolean> t = consumer.poll(Duration.ofMillis(1000));
+//				t.forEach(record -> {
+//					System.out.println(record.value().booleanValue());
+//
+//				});
+//
+//			}
+//		});
+//		serverThread.start();
+//	}
 
 	/**
 	 * private static void startAll() throws IOException { ResourceSetRepository

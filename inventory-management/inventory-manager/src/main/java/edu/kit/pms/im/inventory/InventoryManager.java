@@ -1,6 +1,6 @@
 package edu.kit.pms.im.inventory;
 
-import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSet;
 
 public interface InventoryManager {
@@ -27,9 +27,9 @@ public interface InventoryManager {
 	 * 
 	 * @param ResourceSet to be added
 	 * @return added resourceSet
-	 * @throws MicroserviceError if resourceSet could not be added
+	 * @throws InventoryManagementError if resourceSet could not be added
 	 */
-	public ResourceSet addResourceSet(ResourceSet resourceSet) throws MicroserviceError;
+	public ResourceSet addResourceSet(ResourceSet resourceSet) throws InventoryManagementError;
 
 	/**
 	 * Increases the amount of a ResourceSet, if you want to decease it use the
@@ -37,10 +37,10 @@ public interface InventoryManager {
 	 * 
 	 * @param resourceSet, the amount of the ressourceSet is used as absolute
 	 * @return success boolean value
-	 * @throws MicroserviceError, if resourceSet could't be found
+	 * @throws InventoryManagementError, if resourceSet could't be found
 	 */
 
-	public boolean increaseResourceSet(ResourceSet resourceSet) throws MicroserviceError;
+	public boolean increaseResourceSet(ResourceSet resourceSet) throws InventoryManagementError;
 
 	/**
 	 * Decreases the amount of a resourceSet, if you want to increase it use the
@@ -48,8 +48,8 @@ public interface InventoryManager {
 	 * 
 	 * @param resourceSet, the amount of the ressourceSet is used as absolute
 	 * @return success boolean value
-	 * @throws MicroserviceError, if resourceSet could't be found or amount drops
+	 * @throws InventoryManagementError, if resourceSet could't be found or amount drops
 	 *                            below zero
 	 */
-	public boolean decreaseResourceSet(ResourceSet resourceSet) throws MicroserviceError;
+	public boolean decreaseResourceSet(ResourceSet resourceSet) throws InventoryManagementError;
 }

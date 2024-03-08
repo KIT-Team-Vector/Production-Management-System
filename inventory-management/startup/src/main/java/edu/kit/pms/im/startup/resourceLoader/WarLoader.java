@@ -1,4 +1,4 @@
-package edu.kit.pms.im.inventory.resourceLoader;
+package edu.kit.pms.im.startup.resourceLoader;
 
 import java.io.File;
 import java.io.FileOutputStream;

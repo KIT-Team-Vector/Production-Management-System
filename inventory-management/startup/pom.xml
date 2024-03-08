@@ -7,7 +7,7 @@
 		<artifactId>inventory-management</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>inventory</artifactId>
+	<artifactId>startup</artifactId>
 	<properties>
 		<tomcat.version>10.1.1</tomcat.version>
 	</properties>
@@ -86,10 +86,12 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+					<finalName>inventory-management</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>edu.kit.pms.im.inventory.Main</mainClass>
+							<mainClass>edu.kit.pms.im.startup.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

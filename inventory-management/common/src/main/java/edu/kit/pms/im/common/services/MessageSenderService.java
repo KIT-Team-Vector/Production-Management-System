@@ -1,10 +1,10 @@
 package edu.kit.pms.im.common.services;
 
-import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.domain.InventoryManagementError;
 
 public interface MessageSenderService {
 	
-	public void sendError(Long key, MicroserviceError mError);
+	public void sendError(Long key, InventoryManagementError mError);
 	
 	public void sendDecreaseResourceSetResponse(Long key, Boolean success);
 	

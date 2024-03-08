@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import edu.kit.pms.im.domain.MicroserviceError;
+import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSet;
 import edu.kit.pms.im.domain.ResourceSetRepository;
 import edu.kit.pms.im.common.concepts.ResourceImpl;
@@ -112,7 +112,7 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 	}
 
 	@Override
-	public boolean updateAmount(int id, int deltaAmount) throws MicroserviceError {
+	public boolean updateAmount(int id, int deltaAmount) throws InventoryManagementError {
 		try (Connection con = DriverManager.getConnection(path,
 				dbUsername, dbPassword);
 				PreparedStatement selectStatement = con
@@ -128,7 +128,7 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 				int newAmount = oldAmount + deltaAmount;
 
 				if (newAmount < 0) {
-					throw new MicroserviceError("Incorrect_Amount", "The amount of the resource with id " + id
+					throw new InventoryManagementError("Incorrect_Amount", "The amount of the resource with id " + id
 							+ " cannot fall below zero, available amount: " + oldAmount);
 				}
 				updateStatement.setInt(1, newAmount);
@@ -136,7 +136,7 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 				updateStatement.executeUpdate();
 
 			} else {
-				throw new MicroserviceError("No_Resource", "The resource with " + id + " does not exist");
+				throw new InventoryManagementError("No_Resource", "The resource with " + id + " does not exist");
 			}
 
 			con.commit();

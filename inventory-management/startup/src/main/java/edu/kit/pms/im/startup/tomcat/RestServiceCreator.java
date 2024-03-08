@@ -1,4 +1,4 @@
-package edu.kit.pms.im.inventory.tomcat;
+package edu.kit.pms.im.startup.tomcat;
 
 
 import java.io.IOException;
@@ -7,7 +7,8 @@ import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.tomcat.util.scan.StandardJarScanner;
-import edu.kit.pms.im.inventory.resourceLoader.WarLoader;
+
+import edu.kit.pms.im.startup.resourceLoader.WarLoader;
 
 public class RestServiceCreator {
 	private static final String BASE_DIR = "temp";
