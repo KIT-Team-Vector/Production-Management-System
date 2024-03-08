@@ -34,7 +34,6 @@ public class RestServiceController implements IRestServiceController {
     public RestServiceController() {
 
         placeOrder = new PlaceOrderUseCase(this);
-        messageHandler = new MessageHandler();
     }
 
     @GetMapping("/index")
