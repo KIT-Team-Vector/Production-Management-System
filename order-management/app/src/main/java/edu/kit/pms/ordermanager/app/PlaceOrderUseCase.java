@@ -13,7 +13,7 @@ public class PlaceOrderUseCase {
         this.restServiceController = restServiceController;
     }
 
-    public boolean processOrder(Task order) {
+    public boolean processOrder(Task order, boolean firstRun) {
 
         ResponseEntity<ResourceSet> resourceSetEntity = this.restServiceController.checkInventory(order);
 
@@ -24,9 +24,11 @@ public class PlaceOrderUseCase {
         ResourceSet resourceSet = resourceSetEntity.getBody();
 
         if(resourceSet.getAmount() >= order.getAmount()) {
-            //If amount of resources in inventory is enough take them out.
-            resourceSet.setAmount(order.getAmount());
-            restServiceController.decreaseResourceSetRequest(resourceSet);
+            if (firstRun) {
+                //If amount of resources in inventory is enough take them out.
+                resourceSet.setAmount(order.getAmount());
+                restServiceController.decreaseResourceSetRequest(resourceSet);
+            }
             return true;
         }
 
@@ -39,8 +41,8 @@ public class PlaceOrderUseCase {
                 Resource resource = this.restServiceController.findRequiredResource(order.getResource().getId());
                 Task childTask = new Task(resource, difference);
 
-               if (this.processOrder(childTask)) {
-                   return this.restServiceController.startProduction(order.getResource());
+               if (this.processOrder(childTask, false)) {
+                   return this.restServiceController.startProduction(new ResourceSet(resource, difference));
                }
             }
         }

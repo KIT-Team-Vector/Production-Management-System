@@ -44,6 +44,6 @@ public class OrderManagerController {
     public void placeOrder(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "amount") int amount) {
         Resource resource = new Resource(id, name);
         Task order = new Task(resource, amount);
-        placeOrder.processOrder(order);
+        placeOrder.processOrder(order, true);
     }
 }
