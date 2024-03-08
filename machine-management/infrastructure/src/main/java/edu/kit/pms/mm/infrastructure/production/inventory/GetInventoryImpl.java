@@ -57,7 +57,7 @@ public class GetInventoryImpl implements GetInventory {
 
     @Override
     public ResourceSet get(Resource resource, int amount) throws InventoryException {
-        return get(new ResourceSetImpl(resource, amount));
+        return get(new ResourceSetImpl((ResourceImpl) resource, amount));
     }
 
     @Override

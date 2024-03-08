@@ -4,10 +4,10 @@ import edu.kit.pms.mm.app.AddInventory;
 import edu.kit.pms.mm.app.GetInventory;
 import edu.kit.pms.mm.app.ProductionManager;
 import edu.kit.pms.mm.app.SplitInventory;
-import edu.kit.pms.mm.core.ResourceSet;
 import edu.kit.pms.mm.core.exceptions.InventoryException;
 import edu.kit.pms.mm.core.exceptions.ProductionException;
 import edu.kit.pms.mm.infrastructure.machines.MachineHandler;
+import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceSetImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +26,10 @@ import org.springframework.web.server.ResponseStatusException;
 @ComponentScan
 public class ProductionHandler {
 
+    private ProductionManager productionManager;
+
     @PostMapping("/produce")
-    public @ResponseBody boolean produce(@RequestBody ResourceSet set, @Autowired ProductionManager productionManager) {
+    public @ResponseBody boolean produce(@RequestBody ResourceSetImpl set) {
         try {
             return productionManager.produce(set);
         } catch (ProductionException | InventoryException e) {
@@ -37,6 +39,7 @@ public class ProductionHandler {
 
     @Bean
     public ProductionManager getProductionManager(@Autowired MachineHandler machineRepo, @Autowired SplitInventory inventory) {
+        productionManager = new ProductionManager(machineRepo, inventory);
         return new ProductionManager(machineRepo, inventory);
     }
 

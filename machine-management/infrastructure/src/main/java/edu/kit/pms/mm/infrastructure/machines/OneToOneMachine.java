@@ -72,7 +72,7 @@ public class OneToOneMachine implements Machine {
     @Override
     public ResourceSet produce(ResourceSet providedResourceSet) throws ProductionException {
         if (providedResourceSet.resource().id() == inputResourceId) {
-            Resource outputResource = new ResourceImpl(outputResourceId, outputResourceName);
+            ResourceImpl outputResource = new ResourceImpl(outputResourceId, outputResourceName);
             int outputResourceAmount = providedResourceSet.amount() * PRODUCTION_MULTIPLIER;
             return new ResourceSetImpl(outputResource, outputResourceAmount);
         } else {

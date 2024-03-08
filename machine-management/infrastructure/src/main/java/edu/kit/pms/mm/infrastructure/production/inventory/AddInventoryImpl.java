@@ -26,12 +26,12 @@ public class AddInventoryImpl implements AddInventory {
 
     @Override
     public boolean add(ResourceSet resourceSet) {
-        ResourceSet addedResourceSet;
+        ResourceSetImpl addedResourceSet;
         String inventoryServiceHost = System.getenv("INVENTORY_HOST");
         String inventoryServicePort = System.getenv("INVENTORY_PORT");
 
         try {
-            addedResourceSet = restTemplate.postForObject("http://" + inventoryServiceHost + ":" + inventoryServicePort + "/rest-service/inventory/resource/set", resourceSet, edu.kit.pms.mm.core.ResourceSet.class);
+            addedResourceSet = restTemplate.postForObject("http://" + inventoryServiceHost + ":" + inventoryServicePort + "/rest-service/inventory/resource/set", resourceSet, ResourceSetImpl.class);
         } catch (RestClientException e) {
             return false;
         }
@@ -41,7 +41,7 @@ public class AddInventoryImpl implements AddInventory {
 
     @Override
     public boolean add(Resource resource, int amount) {
-        return add(new ResourceSetImpl(resource, amount));
+        return add(new ResourceSetImpl((ResourceImpl) resource, amount));
     }
 
     @Override
