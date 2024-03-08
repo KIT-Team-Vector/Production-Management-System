@@ -7,8 +7,9 @@ import edu.kit.ordermanager.handlers.IMessageHandler;
 import edu.kit.pms.ordermanager.app.IRestServiceController;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Random;
 
 
 public class RestServiceController implements IRestServiceController {
@@ -56,6 +57,6 @@ public class RestServiceController implements IRestServiceController {
     }
 
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
-        return messageHandler.sendDecreaseResourceSetRequest("I am decreasing");
+        return messageHandler.sendDecreaseResourceSetRequest(new Random().nextLong(), resourceSet);
     }
 }
