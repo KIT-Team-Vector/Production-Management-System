@@ -2,6 +2,7 @@ package assets;
 
 import edu.kit.pms.im.common.controllers.InventoryController;
 
+
 import edu.kit.pms.im.common.controllers.InventoryControllerImpl;
 import edu.kit.pms.im.domain.ResourceSet;
 import edu.kit.pms.im.domain.ResourceSetImpl;

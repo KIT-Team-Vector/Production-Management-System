@@ -1,6 +1,5 @@
 package edu.kit.pms.mm.infrastructure.test;
 
-import edu.kit.pms.mm.core.Resource;
 import edu.kit.pms.mm.core.exceptions.ProductionException;
 import edu.kit.pms.mm.infrastructure.machines.OneToOneMachine;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
@@ -14,8 +13,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 public class OneToOneMachineTest {
     private static final int MACHINE_ID = 1;
     private OneToOneMachine _simpleOneToOneMachine;
-    private Resource _resourceSteel;
-    private Resource _resourceWood;
+    private ResourceImpl _resourceSteel;
+    private ResourceImpl _resourceWood;
 
     @BeforeEach
     public void setUp() {

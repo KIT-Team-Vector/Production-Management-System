@@ -3,9 +3,6 @@ package edu.kit.pms.mm.infrastructure.production.inventory.messageService;
 import java.time.Duration;
 
 public interface KafkaConstants {
-
-    String KAFKA_BROKERS = "134.3.17.150:9092";
-
     // unique
     String CLIENT_ID = "client1-id-machine-management";
     // unique

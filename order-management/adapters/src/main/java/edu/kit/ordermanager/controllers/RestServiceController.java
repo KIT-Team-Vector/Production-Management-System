@@ -5,15 +5,19 @@ import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
 import edu.kit.ordermanager.handlers.IMessageHandler;
 import edu.kit.pms.ordermanager.app.IRestServiceController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Random;
 
-
+@Controller
 public class RestServiceController implements IRestServiceController {
 
+    @Autowired
     private IMessageHandler messageHandler;
     String inventoryServiceHost = System.getenv("INVENTORY_HOST");
 
@@ -29,17 +33,12 @@ public class RestServiceController implements IRestServiceController {
 
     private final String startProductionUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/produce";
 
-    public RestServiceController(IMessageHandler messageHandler) {
-
-        this.messageHandler = messageHandler;
-    }
-
     @Override
     public ResponseEntity<ResourceSet> checkInventory(Task order) {
         int resourceID = order.getResource().getId();
         RestTemplate inventoryTemplate = new RestTemplate();
         String url = checkInventoryUrl + "/" + resourceID;
-        return inventoryTemplate.exchange(url, HttpMethod.GET, null, ResourceSet.class);
+        return inventoryTemplate.getForEntity(url, ResourceSet.class);
     }
 
     @Override
@@ -57,10 +56,9 @@ public class RestServiceController implements IRestServiceController {
     }
 
     @Override
-    public boolean startProduction(int resourceId) {
+    public boolean startProduction(ResourceSet resourceSet) {
         RestTemplate startProductionTemplate = new RestTemplate();
-        String url = startProductionUrl + "/" + resourceId;
-        return Boolean.TRUE.equals(startProductionTemplate.getForObject(url, Boolean.class));
+        return Boolean.TRUE.equals(startProductionTemplate.postForObject(startProductionUrl, resourceSet, Boolean.class));
     }
 
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {

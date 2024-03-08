@@ -26,7 +26,7 @@ public class ProductionManager {
         Machine chosenMachine = availableMachines.iterator().next();
         Resource requiredResource = chosenMachine.getInput();
         int requiredResourceAmount = desiredResources.amount() / chosenMachine.getMultiplier();
-        requiredResourceAmount = desiredResources.amount() % 2 == 0 ? requiredResourceAmount : requiredResourceAmount + 1;
+        requiredResourceAmount = desiredResources.amount() % chosenMachine.getMultiplier() == 0 ? requiredResourceAmount : requiredResourceAmount + chosenMachine.getMultiplier();
 
         ResourceSet availableResources = inventory.get(requiredResource, requiredResourceAmount);
         if (availableResources != null) {

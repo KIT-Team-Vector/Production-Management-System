@@ -17,5 +17,5 @@ VALUES
     (1, 'steel', 10),
     (2, 'wood', 10),
     (3, 'paper', 10),
-    (4, 'cooper', 10),
+    (4, 'copper', 10),
     (5, 'plastic', 10);

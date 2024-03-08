@@ -1,11 +1,10 @@
 package edu.kit.pms.mm.infrastructure.production.coreImpl;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import edu.kit.pms.mm.core.Resource;
 import edu.kit.pms.mm.core.ResourceSet;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record ResourceSetImpl(Resource resource, int amount) implements ResourceSet {
+public record ResourceSetImpl(ResourceImpl resource, int amount) implements ResourceSet {
 
     @Override
     public boolean equals(Object o) {

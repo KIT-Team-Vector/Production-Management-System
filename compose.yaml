@@ -1,0 +1,108 @@
+name: production-management-system
+
+services:
+  inventory-db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: iv_53895738753
+    volumes:
+      - inventory-data:/var/lib/mysql
+      - ./inventory-management/database-service/MySql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - inventory-network
+    ports:
+      - "3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "inventory-db" ]
+      timeout: 10s
+      retries: 10
+
+  inventory-management:
+    image: inventory-management:latest
+    build: ./inventory-management
+    depends_on:
+      inventory-db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=inventory-db
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=iv_53895738753
+      - KAFKA_BROKER_HOST=134.3.17.150
+      - KAFKA_BROKER_PORT=9092
+    networks:
+      - service-network
+      - inventory-network
+    ports:
+      - "8080"
+
+  machine-db:
+    image: mysql:latest
+    depends_on:
+      inventory-management:
+        condition: service_started
+    environment:
+      MYSQL_ROOT_PASSWORD: sqlRootPW
+      MYSQL_DATABASE: machineManagementDB
+      MYSQL_USER: springUser
+      MYSQL_PASSWORD: springUserPW
+    volumes:
+      - ./machine-management/infrastructure/src/main/resources/initMachineManagementDB.sql:/docker-entrypoint-initdb.d/initMachineManagementDB.sql
+    networks:
+      - machine-network
+    ports:
+      - "3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "machine-db" ]
+      timeout: 10s
+      retries: 10
+
+  machine-management:
+    image: machine-management:latest
+    build: ./machine-management
+    depends_on:
+      machine-db:
+        condition: service_healthy
+      inventory-management:
+        condition: service_started
+    networks:
+      - service-network
+      - machine-network
+    ports:
+      - "8080"
+    environment:
+      - DB_SPRING_USER_NAME=springUser
+      - DB_SPRING_USER_PW=springUserPW
+      - DB_HOST=machine-db
+      - DB_PORT=3306
+      - DB_NAME=machineManagementDB
+      - INVENTORY_HOST=inventory-management
+      - INVENTORY_PORT=8080
+      - KAFKA_BROKER_HOST=134.3.17.150
+      - KAFKA_BROKER_PORT=9092
+
+  order-management:
+    image: order-management:latest
+    build: ./order-management
+    depends_on:
+      machine-management:
+        condition: service_started
+    networks:
+      - service-network
+    ports:
+      - "8080:8080"
+    environment:
+      - INVENTORY_HOST=inventory-management
+      - INVENTORY_PORT=8080
+      - MACHINE_HOST=machine-management
+      - MACHINE_PORT=8080
+      - KAFKA_BROKER_HOST=134.3.17.150
+      - KAFKA_BROKER_PORT=9092
+
+networks:
+  service-network:
+  inventory-network:
+  machine-network:
+
+volumes:
+  inventory-data:

@@ -5,7 +5,8 @@ import java.time.Duration;
 public interface IKafkaConstants {
 
 	//public static String KAFKA_BROKERS = "134.3.17.150:9092";
-	public static String KAFKA_BROKERS = "192.168.0.163:9091";
+	//public static String KAFKA_BROKERS = "192.168.0.163:9091";
+	public static String KAFKA_BROKERS = System.getenv("KAFKA_BROKER_HOST") + ":" + System.getenv("KAFKA_BROKER_PORT");
 
     public static Integer MESSAGE_COUNT=1000;
     // unique
