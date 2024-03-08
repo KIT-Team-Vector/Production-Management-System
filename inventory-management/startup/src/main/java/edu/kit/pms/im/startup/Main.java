@@ -3,12 +3,12 @@ package edu.kit.pms.im.startup;
 import org.apache.kafka.common.serialization.BooleanSerializer;
 
 import edu.kit.pms.im.domain.ResourceSetRepository;
+import edu.kit.pms.im.inventory.InventoryManager;
+import edu.kit.pms.im.inventory.InventoryManagerImpl;
 import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSetImpl;
 import edu.kit.pms.im.common.services.MessageReceiverService;
 import edu.kit.pms.im.database.*;
-import edu.kit.pms.im.inventory.InventoryManager;
-import edu.kit.pms.im.inventory.InventoryManagerImpl;
 import edu.kit.pms.im.message.handlers.*;
 import edu.kit.pms.im.message.kafka.clients.ConsumerFactory;
 import edu.kit.pms.im.message.kafka.clients.ProducerFactory;
