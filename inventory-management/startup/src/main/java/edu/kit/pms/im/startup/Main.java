@@ -23,7 +23,7 @@ import edu.kit.pms.im.common.services.*;
 import edu.kit.pms.im.common.controllers.*;
 
 /**
- * 
+ * Is starting point of the application, builds the application and starts the rest-service and the message-service
  */
 public class Main {
 
