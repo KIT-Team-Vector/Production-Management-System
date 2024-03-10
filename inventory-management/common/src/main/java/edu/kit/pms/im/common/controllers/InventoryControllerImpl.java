@@ -33,6 +33,10 @@ public class InventoryControllerImpl implements InventoryController {
         }
         return INSTANCE;
     }
+	
+	public static void removeInstance() {
+		INSTANCE = null;
+	}
 
 	public static boolean isInstanceCreated() {
 		return INSTANCE != null;

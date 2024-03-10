@@ -24,7 +24,9 @@ import edu.kit.pms.im.domain.ResourceSetRepository;
 public class InventoryManagerTest {
 
 	private InventoryManagerImpl inventoryManager;
+	
 	private ResourceSetRepository mockRepository;
+	
 	private ResourceSet testResourceSetWithPositiveAmount;
 	private ResourceSet testResourceSetWithNegativeAmount;
 

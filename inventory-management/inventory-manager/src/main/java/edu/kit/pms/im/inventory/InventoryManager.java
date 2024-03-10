@@ -3,6 +3,11 @@ package edu.kit.pms.im.inventory;
 import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSet;
 
+
+/**
+ * Manager for the inventory which consists out of the ResourceSetRepository
+ * All request to the inventory should be made via. with the InventoryManager
+ */
 public interface InventoryManager {
 
 	/**
