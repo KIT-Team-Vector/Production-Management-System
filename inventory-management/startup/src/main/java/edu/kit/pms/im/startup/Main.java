@@ -8,7 +8,8 @@ import edu.kit.pms.im.inventory.InventoryManagerImpl;
 import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSetImpl;
 import edu.kit.pms.im.common.services.MessageReceiverService;
-import edu.kit.pms.im.database.*;
+import edu.kit.pms.im.database.connection.EnvVariableConnectionProvider;
+import edu.kit.pms.im.database.repository.SqlResourceSetRepository;
 import edu.kit.pms.im.message.handlers.*;
 import edu.kit.pms.im.message.kafka.clients.ConsumerFactory;
 import edu.kit.pms.im.message.kafka.clients.ProducerFactory;
@@ -47,7 +48,7 @@ public class Main {
 	}
 
 	private static InventoryManager createInventoryManager() {
-		ResourceSetRepository resourceSetRepository = new SqlResourceSetRepository();
+		ResourceSetRepository resourceSetRepository = new SqlResourceSetRepository(new EnvVariableConnectionProvider());
 		return new InventoryManagerImpl(resourceSetRepository);
 	}
 
