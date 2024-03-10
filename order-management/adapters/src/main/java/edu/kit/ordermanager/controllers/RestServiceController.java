@@ -17,8 +17,6 @@ import java.util.Random;
 @Controller
 public class RestServiceController implements IRestServiceController {
 
-    @Autowired
-    private IMessageHandler messageHandler;
     String inventoryServiceHost = System.getenv("INVENTORY_HOST");
 
     String inventoryServicePort = System.getenv("INVENTORY_PORT");
@@ -59,9 +57,5 @@ public class RestServiceController implements IRestServiceController {
     public boolean startProduction(ResourceSet resourceSet) {
         RestTemplate startProductionTemplate = new RestTemplate();
         return Boolean.TRUE.equals(startProductionTemplate.postForObject(startProductionUrl, resourceSet, Boolean.class));
-    }
-
-    public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
-        return messageHandler.sendDecreaseResourceSetRequest(new Random().nextLong(), resourceSet);
     }
 }

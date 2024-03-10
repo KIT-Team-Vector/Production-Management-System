@@ -9,8 +9,11 @@ public class PlaceOrderUseCase {
 
     private IRestServiceController restServiceController;
 
-    public PlaceOrderUseCase(IRestServiceController restServiceController) {
+    private IKafkaController kafkaController;
+
+    public PlaceOrderUseCase(IRestServiceController restServiceController, IKafkaController kafkaController) {
         this.restServiceController = restServiceController;
+        this.kafkaController = kafkaController;
     }
 
     public boolean processOrder(Task order, boolean firstRun) {
@@ -27,7 +30,7 @@ public class PlaceOrderUseCase {
             if (firstRun) {
                 //If amount of resources in inventory is enough take them out.
                 resourceSet.setAmount(order.getAmount());
-                restServiceController.decreaseResourceSetRequest(resourceSet);
+                kafkaController.decreaseResourceSetRequest(resourceSet);
             }
             return true;
         }
@@ -43,7 +46,7 @@ public class PlaceOrderUseCase {
 
                if (this.processOrder(childTask, false)) {
                    if(this.restServiceController.startProduction(new ResourceSet(order.getResource(), difference)) && firstRun) {
-                       restServiceController.decreaseResourceSetRequest(new ResourceSet(order.getResource(), order.getAmount()));
+                       return kafkaController.decreaseResourceSetRequest(new ResourceSet(order.getResource(), order.getAmount()));
                    }
                }
             }

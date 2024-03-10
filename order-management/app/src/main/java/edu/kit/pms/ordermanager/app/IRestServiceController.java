@@ -15,5 +15,4 @@ public interface IRestServiceController {
 
     public boolean startProduction(ResourceSet resourceSet);
 
-    public boolean decreaseResourceSetRequest(ResourceSet resourceSet);
 }

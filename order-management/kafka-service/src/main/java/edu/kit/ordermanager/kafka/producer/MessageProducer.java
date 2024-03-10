@@ -11,8 +11,23 @@ public class MessageProducer {
     @Autowired
     private KafkaTemplate<Long, ResourceSet> kafkaTemplate;
 
-    public void sendMessage(String topic, Long key, ResourceSet resourceSet) {
-        kafkaTemplate.send(topic, key, resourceSet);
+    public boolean sendMessage(String topic, Long key, ResourceSet resourceSet) {
+        synchronized (this) {
+            kafkaTemplate.send(topic, key, resourceSet);
+            try {
+                wait(100);
+                return true;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
+
+    public void response() {
+        synchronized (this) {
+            notify();
+        }
     }
 
 }

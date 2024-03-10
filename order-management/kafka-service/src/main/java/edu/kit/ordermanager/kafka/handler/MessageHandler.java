@@ -13,8 +13,7 @@ public class MessageHandler implements IMessageHandler {
     private MessageProducer messageProducer;
 
     public boolean sendDecreaseResourceSetRequest(Long key, ResourceSet resourceSet) {
-        messageProducer.sendMessage("decreaseResourceSetRequest",key, resourceSet);
-        return true;
+        return messageProducer.sendMessage("decreaseResourceSetRequest",key, resourceSet);
     }
 
 }
