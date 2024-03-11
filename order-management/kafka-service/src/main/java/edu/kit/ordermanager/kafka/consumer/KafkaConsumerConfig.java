@@ -17,8 +17,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
-    @Value(value = "${spring.kafka.bootstrap-servers}")
-    private String bootstrapAddress;
+    private String bootstrapAddress = System.getenv("KAFKA_BROKER_HOST") + ":" + System.getenv("KAFKA_BROKER_HOST");
 
     @Bean
     public ConsumerFactory<Long, Boolean> consumerFactory() {
