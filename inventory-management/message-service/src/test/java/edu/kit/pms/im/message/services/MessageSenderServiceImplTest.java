@@ -44,6 +44,7 @@ public class MessageSenderServiceImplTest {
 
     @Test
     public void testSendError() throws InterruptedException, ExecutionException {
+    	// Given
     	Long key = 1L;
         InventoryManagementError error = new InventoryManagementError("type", "Test error", 1111);
         ProducerRecord<Long, InventoryManagementError> record = new ProducerRecord<>(
@@ -76,7 +77,7 @@ public class MessageSenderServiceImplTest {
     }
 
     @Test
-    public void testStop_ShouldCloseProducers() {
+    public void testStop() {
         // When
         messageSenderService.stop();
 

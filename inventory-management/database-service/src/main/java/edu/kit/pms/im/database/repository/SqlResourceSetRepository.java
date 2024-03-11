@@ -34,7 +34,6 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return resourceSets;
@@ -53,7 +52,6 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 				return resourceSet;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

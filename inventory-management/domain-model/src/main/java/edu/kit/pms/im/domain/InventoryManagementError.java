@@ -1,10 +1,9 @@
 package edu.kit.pms.im.domain;
 
-import java.util.Random;
 
 public class InventoryManagementError extends Error {
 	
-	private static final long serialVersionUID = new Random().nextLong();;
+	private static final long serialVersionUID = -9121677943196379445L;
 
 	private String type;
 

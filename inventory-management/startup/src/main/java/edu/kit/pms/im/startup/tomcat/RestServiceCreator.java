@@ -61,7 +61,6 @@ public class RestServiceCreator {
 				} catch (IllegalArgumentException e) {
 					e.printStackTrace();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}

@@ -33,7 +33,6 @@ public class MessageReceiverServiceImplTest {
     	try {
 			messageReceiverThread.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -49,7 +48,6 @@ public class MessageReceiverServiceImplTest {
 			messageReceiverService.stop();
 	    	messageReceiverThread.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
@@ -66,7 +64,6 @@ public class MessageReceiverServiceImplTest {
     	try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	

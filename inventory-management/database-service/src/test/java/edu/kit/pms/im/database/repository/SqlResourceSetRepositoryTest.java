@@ -60,15 +60,10 @@ public class SqlResourceSetRepositoryTest {
 		ArrayList<ResourceSet> expectedResourceSets = new ArrayList<>();
 		expectedResourceSets.add(testResourceSet);
 
-		// Mocking behavior of result set
-		when(resultSet.next()).thenReturn(true).thenReturn(false); // Simulate single row in result set
-		when(resultSet.getInt("id")).thenReturn(testResourceSet.resource().id()); // Example: Assuming "id" column is
-																					// int
-		when(resultSet.getString("primary_name")).thenReturn(testResourceSet.resource().name()); // Example: Assuming
-																									// "primary_name"
-																									// column is string
-		when(resultSet.getInt("amount")).thenReturn(testResourceSet.amount()); // Example: Assuming "amount" column is
-																				// int
+		when(resultSet.next()).thenReturn(true).thenReturn(false);
+		when(resultSet.getInt("id")).thenReturn(testResourceSet.resource().id());
+		when(resultSet.getString("primary_name")).thenReturn(testResourceSet.resource().name());																						
+		when(resultSet.getInt("amount")).thenReturn(testResourceSet.amount()); 
 
 		// When
 		ArrayList<ResourceSet> actualResourceSets = new ArrayList<>(repository.getAll());
