@@ -16,9 +16,8 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfig {
-
-    @Value(value = "${spring.kafka.bootstrap-servers}")
-    private String bootstrapAddress;
+    
+    private String bootstrapAddress = System.getenv("KAFKA_BROKER_HOST") + ":" + System.getenv("KAFKA_BROKER_HOST");
 
     @Bean
     public ProducerFactory<Long, ResourceSet> producerFactory() {
