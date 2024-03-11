@@ -15,10 +15,8 @@ public class MessageConsumer {
     private MessageProducer messageProducer;
     @KafkaListener(topics = "decreaseResourceSetResponse", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(@Header(KafkaHeaders.RECEIVED_KEY) Long key, Boolean response) {
-        synchronized (this) {
             System.out.println("Received message customer response: " + response);
             messageProducer.response();
-        }
     }
 }
 

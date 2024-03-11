@@ -11,17 +11,16 @@ public class MessageProducer {
     @Autowired
     private KafkaTemplate<Long, ResourceSet> kafkaTemplate;
 
-    public boolean sendMessage(String topic, Long key, ResourceSet resourceSet) {
+    public synchronized boolean sendMessage(String topic, Long key, ResourceSet resourceSet) {
         synchronized (this) {
             kafkaTemplate.send(topic, key, resourceSet);
             try {
-                wait(100);
+                wait();
                 return true;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
     public void response() {
