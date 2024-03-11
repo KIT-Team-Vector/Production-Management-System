@@ -9,6 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+
 	<modules>
 		<module>rest-service</module>
 		<module>message-service</module>
@@ -39,7 +40,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
     <plugins>
       <plugin>
