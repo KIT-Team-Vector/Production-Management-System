@@ -17,7 +17,7 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
     
-    private String bootstrapAddress = System.getenv("KAFKA_BROKER_HOST") + ":" + System.getenv("KAFKA_BROKER_HOST");
+    private String bootstrapAddress = System.getenv("KAFKA_BROKER_HOST") + ":" + System.getenv("KAFKA_BROKER_PORT");
 
     @Bean
     public ProducerFactory<Long, ResourceSet> producerFactory() {
