@@ -1,15 +1,14 @@
-package edu.kit.pms.im.database;
+package edu.kit.pms.im.database.repository;
 
 import java.sql.Connection;
 
-
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import edu.kit.pms.im.database.connection.ConnectionProvider;
 import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceImpl;
 import edu.kit.pms.im.domain.ResourceSet;
@@ -18,24 +17,15 @@ import edu.kit.pms.im.domain.ResourceSetRepository;
 
 public class SqlResourceSetRepository implements ResourceSetRepository {
 	
-	private String path;
-	private String dbUsername;
-	private String dbPassword;
+	private ConnectionProvider connectionProvider;
 	
-	public SqlResourceSetRepository() {
-		String dbHost = System.getenv("DB_HOST");
-        String dbPort = System.getenv("DB_PORT");
-        path = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + "inventorydatabase";
-        dbUsername = System.getenv("DB_USERNAME");
-        dbPassword = System.getenv("DB_PASSWORD");
-        
-        
+	public SqlResourceSetRepository(ConnectionProvider connectionProvider) {
+		this.connectionProvider = connectionProvider;   
 	}
 
 	public Collection<ResourceSet> getAll() {
 		Collection<ResourceSet> resourceSets = new ArrayList<>();
-		try (Connection con = DriverManager.getConnection(path,
-				dbUsername, dbPassword);
+		try (Connection con = connectionProvider.getConnection();
 				PreparedStatement stmt = con.prepareStatement(SqlStatementGenerator.selectAllResourceSets())) {
 			ResultSet resultSet = stmt.executeQuery();
 			while (resultSet.next()) {
@@ -44,7 +34,6 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return resourceSets;
@@ -53,8 +42,7 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 	@Override
 	public ResourceSet get(int id) {
 		ResourceSet resourceSet;
-		try (Connection con = DriverManager.getConnection(path,
-				dbUsername, dbPassword);
+		try (Connection con = connectionProvider.getConnection();
 				PreparedStatement stmt = con.prepareStatement(SqlStatementGenerator.selectResourceSetWithId())) {
 
 			stmt.setInt(1, id);
@@ -64,7 +52,6 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 				return resourceSet;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -72,8 +59,7 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 
 	@Override
 	public ResourceSet add(String name, int amount) {
-		try (Connection con = DriverManager.getConnection(path,
-				dbUsername, dbPassword);
+		try (Connection con = connectionProvider.getConnection();
 				PreparedStatement addStatement = con.prepareStatement(SqlStatementGenerator.insertWithNameAndAmount(), PreparedStatement.RETURN_GENERATED_KEYS)) {
 			
 			addStatement.setString(1, name);
@@ -98,8 +84,7 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 	@Override
 	public boolean delete(int id) {
 		int rowInserted = 0;
-		try (Connection con = DriverManager.getConnection(path,
-				dbUsername, dbPassword);
+		try (Connection con = connectionProvider.getConnection();
 				PreparedStatement stmt = con.prepareStatement(SqlStatementGenerator.deleteResourceSetWithId())) {
 
 			stmt.setInt(1, id);
@@ -113,8 +98,7 @@ public class SqlResourceSetRepository implements ResourceSetRepository {
 
 	@Override
 	public boolean updateAmount(int id, int deltaAmount) throws InventoryManagementError {
-		try (Connection con = DriverManager.getConnection(path,
-				dbUsername, dbPassword);
+		try (Connection con = connectionProvider.getConnection();
 				PreparedStatement selectStatement = con
 						.prepareStatement(SqlStatementGenerator.selectAndLockResourceSetWithId());
 				PreparedStatement updateStatement = con

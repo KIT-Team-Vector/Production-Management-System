@@ -1,5 +1,6 @@
 package edu.kit.pms.im.common.controllers;
 import edu.kit.pms.im.common.services.MessageSenderService;
+
 import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSet;
 import edu.kit.pms.im.inventory.InventoryManager;
@@ -32,6 +33,10 @@ public class InventoryControllerImpl implements InventoryController {
         }
         return INSTANCE;
     }
+	
+	public static void removeInstance() {
+		INSTANCE = null;
+	}
 
 	public static boolean isInstanceCreated() {
 		return INSTANCE != null;

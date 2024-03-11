@@ -1,8 +1,9 @@
 package edu.kit.pms.im.domain;
 
+
 public class InventoryManagementError extends Error {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9121677943196379445L;
 
 	private String type;
 
