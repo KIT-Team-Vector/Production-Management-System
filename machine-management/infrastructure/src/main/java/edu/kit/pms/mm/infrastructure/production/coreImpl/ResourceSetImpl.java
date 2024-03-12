@@ -7,6 +7,11 @@ import edu.kit.pms.mm.core.ResourceSet;
 public record ResourceSetImpl(ResourceImpl resource, int amount) implements ResourceSet {
 
     @Override
+    public String toString() {
+        return amount + "x " + resource;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
