@@ -1,11 +1,10 @@
 package edu.kit.ordermanager.kafka.serializer;
 
-import java.util.Map;
-
-import org.apache.kafka.common.serialization.Serializer;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.kit.ordermanager.entities.Resource;
+import org.apache.kafka.common.serialization.Serializer;
+
+import java.util.Map;
 public class ResourceSerializer implements Serializer<Resource> {
 
     @Override

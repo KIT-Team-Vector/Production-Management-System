@@ -13,7 +13,7 @@ public class MessageProducer {
     @Autowired
     private KafkaTemplate<Long, ResourceSet> kafkaTemplate;
 
-    public synchronized boolean sendMessage(String topic, Long key, ResourceSet resourceSet) {
+    public boolean sendMessage(String topic, Long key, ResourceSet resourceSet) {
         synchronized (this) {
             this.key = key;
             kafkaTemplate.send(topic, key, resourceSet);

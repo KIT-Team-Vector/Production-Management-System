@@ -19,5 +19,3 @@ public class MessageConsumer {
             messageProducer.response(key);
     }
 }
-
-

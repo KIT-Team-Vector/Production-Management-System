@@ -3,7 +3,6 @@ package edu.kit.pms.ordermanager.app;
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
-import org.springframework.http.ResponseEntity;
 
 public class PlaceOrderUseCase {
 
@@ -18,13 +17,11 @@ public class PlaceOrderUseCase {
 
     public boolean processOrder(Task order, boolean firstRun) {
 
-        ResponseEntity<ResourceSet> resourceSetEntity = this.restServiceController.checkInventory(order);
+        ResourceSet resourceSet= this.restServiceController.checkInventory(order);
 
-        if(resourceSetEntity.getStatusCode().value() == 404) {
+        if(resourceSet == null) {
             return false;
         }
-
-        ResourceSet resourceSet = resourceSetEntity.getBody();
 
         if(resourceSet.getAmount() >= order.getAmount()) {
             if (firstRun) {

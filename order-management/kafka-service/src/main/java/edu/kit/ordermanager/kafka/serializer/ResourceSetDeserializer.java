@@ -1,12 +1,10 @@
 package edu.kit.ordermanager.kafka.serializer;
 
-import java.util.Map;
-
-
-import org.apache.kafka.common.serialization.Deserializer;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.kit.ordermanager.entities.ResourceSet;
+import org.apache.kafka.common.serialization.Deserializer;
+
+import java.util.Map;
 
 
 
