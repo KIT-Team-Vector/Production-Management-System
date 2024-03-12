@@ -16,6 +16,6 @@ INSERT IGNORE INTO inventory (id, primary_name, amount)
 VALUES 
     (1, 'steel', 10),
     (2, 'wood', 10),
-    (3, 'paper', 10),
-    (4, 'copper', 10),
+    (3, 'copper', 10),
+    (4, 'paper', 10),
     (5, 'plastic', 10);
