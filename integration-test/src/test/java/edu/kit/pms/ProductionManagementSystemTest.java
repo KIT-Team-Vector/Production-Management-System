@@ -21,38 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class ProductionManagementSystemTest {
 
-    @BeforeAll
-    public static void setUp() {
-
-        for(int i = 1; i <= 5; i++) {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest requestInventory = HttpRequest.newBuilder()
-                    .version(HttpClient.Version.HTTP_2)
-                    .uri(URI.create("http://localhost:8081/rest-service/inventory/resource/set/" + i))
-                    .GET()
-                    .build();
-
-            try {
-                HttpResponse<String> responseInventory = client.send(requestInventory, HttpResponse.BodyHandlers.ofString());
-                ResourceSet resourceSet = parser(responseInventory.body());
-                if(resourceSet.getAmount() != 10) {
-                    resourceSet.setAmount(10);
-                    ObjectMapper ow = new ObjectMapper();
-                    String jsnResourceSet = ow.writeValueAsString(resourceSet);
-                    HttpRequest requestAddToInventory = HttpRequest.newBuilder()
-                            .version(HttpClient.Version.HTTP_2)
-                            .uri(URI.create("http://localhost:8081/rest-service/inventory/resource/set"))
-                            .POST(HttpRequest.BodyPublishers.ofString(jsnResourceSet))
-                            .header("Content-type", "application/json")
-                            .build();
-                    client.send(requestAddToInventory, HttpResponse.BodyHandlers.ofString());
-                }
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     @Test
     @Order(1)
     public void placeOrderWithEnoughResourceInInventory() {
