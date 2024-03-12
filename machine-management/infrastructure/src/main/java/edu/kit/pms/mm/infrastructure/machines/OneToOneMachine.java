@@ -9,11 +9,14 @@ import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceSetImpl;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OneToOneMachine implements Machine {
 
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final int PRODUCTION_MULTIPLIER = 1;
 
     @Id
@@ -32,8 +35,7 @@ public class OneToOneMachine implements Machine {
         if (newId <= 0) {
             throw new IllegalArgumentException("Machine ID must be greater than 0");
         }
-
-        this.id = newId;
+        id = newId;
     }
 
     @Override
@@ -42,12 +44,8 @@ public class OneToOneMachine implements Machine {
     }
 
     public void setInput(Resource newInputResource) {
-        setInput(newInputResource.id());
+        inputResourceId = newInputResource.id();
         inputResourceName = newInputResource.name();
-    }
-
-    public void setInput(int newInputResourceId) {
-        this.inputResourceId = newInputResourceId;
     }
 
     @Override
@@ -56,12 +54,8 @@ public class OneToOneMachine implements Machine {
     }
 
     public void setOutput(Resource newOutputResource) {
-        setOutput(newOutputResource.id());
+        outputResourceId = newOutputResource.id();
         outputResourceName = newOutputResource.name();
-    }
-
-    public void setOutput(int newOutputResourceId) {
-        this.outputResourceId = newOutputResourceId;
     }
 
     @Override
@@ -73,10 +67,14 @@ public class OneToOneMachine implements Machine {
     public ResourceSet produce(ResourceSet providedResourceSet) throws ProductionException {
         if (providedResourceSet.resource().id() == inputResourceId) {
             ResourceImpl outputResource = new ResourceImpl(outputResourceId, outputResourceName);
-            int outputResourceAmount = providedResourceSet.amount() * PRODUCTION_MULTIPLIER;
-            return new ResourceSetImpl(outputResource, outputResourceAmount);
+            int outputResourceAmount = providedResourceSet.amount() * getMultiplier();
+            ResourceSet producedResourceSet = new ResourceSetImpl(outputResource, outputResourceAmount);
+
+            LOGGER.info("Produced " + producedResourceSet);
+            return producedResourceSet;
         } else {
-            throw new ProductionException("This machine does only work with resource " + inputResourceId + ", but resource " + providedResourceSet.resource().id() + " was provided");
+            LOGGER.warn("Production failed because wrong resources were provided");
+            throw new ProductionException("This machine does only work with " + new ResourceImpl(inputResourceId, inputResourceName) + ", but " + providedResourceSet.resource().id() + " was provided");
         }
     }
 }

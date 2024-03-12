@@ -37,7 +37,7 @@ services:
     networks:
       - inventory-network
     ports:
-      - "3306"
+      - "33060:3306"
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "inventory-db" ]
       timeout: 10s
@@ -60,7 +60,7 @@ services:
       - service-network
       - inventory-network
     ports:
-      - 8081:8080
+      - "8080"
 
   machine-db:
     image: mysql:latest

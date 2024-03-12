@@ -42,13 +42,7 @@ public class GetInventoryImpl implements GetInventory {
         long msgRecordKey = new Random().nextLong();
         ProducerRecord<Long, ResourceSet> msgRecord = new ProducerRecord<>(KafkaConstants.TOPIC_DECREASE_RESOURCE_SET_REQUEST, msgRecordKey, resourceSet);
 
-        try {
-            msgProducer.send(msgRecord).get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new InventoryException("Unable to send requests to inventory");
-        }
-
-        if (checkResponse(msgRecordKey)) {
+        if (checkResponse(msgRecordKey, msgRecord)) {
             return resourceSet;
         } else {
             throw new InventoryException("Unable to get resources from inventory");
@@ -65,13 +59,18 @@ public class GetInventoryImpl implements GetInventory {
         return get(new ResourceSetImpl(new ResourceImpl(resourceId), amount));
     }
 
-    private boolean checkResponse(long expectedResponseKey) {
+    private boolean checkResponse(long expectedResponseKey, ProducerRecord<Long, ResourceSet> msgRecord) throws InventoryException {
         AtomicReference<Boolean> response = new AtomicReference<>();
         AtomicReference<Boolean> noMsgYet = new AtomicReference<>(true);
+        boolean firstIteration = true;
 
         try (Consumer<Long, Boolean> msgConsumer = consumerFactory.create(KafkaConstants.TOPIC_DECREASE_RESOURCE_SET_RESPONSE)) {
             while (noMsgYet.get()) {
                 ConsumerRecords<Long, Boolean> consumerRecords = msgConsumer.poll(KafkaConstants.POLLING_DURATION);
+                if (firstIteration) {
+                    msgProducer.send(msgRecord).get();
+                    firstIteration = false;
+                }
                 consumerRecords.forEach(record -> {
                     if (record.key().equals(expectedResponseKey)) {
                         response.set(record.value());
@@ -81,6 +80,8 @@ public class GetInventoryImpl implements GetInventory {
                 // commits the offset of record to broker.
                 msgConsumer.commitAsync();
             }
+        } catch (ExecutionException | InterruptedException e) {
+            throw new InventoryException("Unable to send requests to inventory");
         }
 
         return response.get();
