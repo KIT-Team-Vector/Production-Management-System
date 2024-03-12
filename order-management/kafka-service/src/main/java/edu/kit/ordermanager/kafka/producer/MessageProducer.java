@@ -8,11 +8,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageProducer {
 
+    private Long key;
+
     @Autowired
     private KafkaTemplate<Long, ResourceSet> kafkaTemplate;
 
-    public void sendMessage(String topic, Long key, ResourceSet resourceSet) {
-        kafkaTemplate.send(topic, key, resourceSet);
+    public boolean sendMessage(String topic, Long key, ResourceSet resourceSet) {
+        synchronized (this) {
+            this.key = key;
+            kafkaTemplate.send(topic, key, resourceSet);
+            try {
+                wait();
+                return true;
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void response(Long key) {
+        synchronized (this) {
+            if(this.key != null && this.key.equals(key)) {
+                notify();
+            }
+        }
     }
 
 }

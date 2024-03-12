@@ -1,8 +1,8 @@
 package edu.kit.ordermanager.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.common.serialization.*;
-import org.springframework.beans.factory.annotation.Value;
+import org.apache.kafka.common.serialization.BooleanDeserializer;
+import org.apache.kafka.common.serialization.LongDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -17,8 +17,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
-    @Value(value = "${spring.kafka.bootstrap-servers}")
-    private String bootstrapAddress;
+    private String bootstrapAddress = System.getenv("KAFKA_BROKER_HOST") + ":" + System.getenv("KAFKA_BROKER_PORT");
 
     @Bean
     public ConsumerFactory<Long, Boolean> consumerFactory() {

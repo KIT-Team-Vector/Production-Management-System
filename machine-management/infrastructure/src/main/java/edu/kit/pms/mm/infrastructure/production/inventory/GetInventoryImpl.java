@@ -67,6 +67,8 @@ public class GetInventoryImpl implements GetInventory {
         try (Consumer<Long, Boolean> msgConsumer = consumerFactory.create(KafkaConstants.TOPIC_DECREASE_RESOURCE_SET_RESPONSE)) {
             while (noMsgYet.get()) {
                 ConsumerRecords<Long, Boolean> consumerRecords = msgConsumer.poll(KafkaConstants.POLLING_DURATION);
+                // commits the offset of record to broker.
+                msgConsumer.commitAsync();
                 if (firstIteration) {
                     msgProducer.send(msgRecord).get();
                     firstIteration = false;
@@ -77,8 +79,6 @@ public class GetInventoryImpl implements GetInventory {
                         noMsgYet.set(false);
                     }
                 });
-                // commits the offset of record to broker.
-                msgConsumer.commitAsync();
             }
         } catch (ExecutionException | InterruptedException e) {
             throw new InventoryException("Unable to send requests to inventory");

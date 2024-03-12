@@ -3,7 +3,6 @@ package edu.kit.ordermanager.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 public class Resource implements Serializable {

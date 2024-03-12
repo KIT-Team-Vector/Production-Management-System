@@ -3,11 +3,10 @@ package edu.kit.pms.ordermanager.app;
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.ordermanager.entities.Task;
-import org.springframework.http.ResponseEntity;
 
 public interface IRestServiceController {
 
-    public ResponseEntity<ResourceSet> checkInventory(Task order);
+    public ResourceSet checkInventory(Task order);
 
     public boolean checkAvailableMachinces(int resourceId);
 
@@ -15,5 +14,4 @@ public interface IRestServiceController {
 
     public boolean startProduction(ResourceSet resourceSet);
 
-    public boolean decreaseResourceSetRequest(ResourceSet resourceSet);
 }

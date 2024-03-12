@@ -1,4 +1,4 @@
-package edu.kit.pms.im.database;
+package edu.kit.pms.im.database.repository;
 
 public class SqlStatementGenerator {
 

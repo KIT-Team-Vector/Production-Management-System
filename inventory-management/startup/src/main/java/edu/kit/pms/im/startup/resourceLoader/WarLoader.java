@@ -1,11 +1,6 @@
 package edu.kit.pms.im.startup.resourceLoader;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 
 public class WarLoader {
 	
