@@ -28,7 +28,7 @@ public class MessageProducer {
 
     public void response(Long key) {
         synchronized (this) {
-            if(this.key.equals(key)) {
+            if(this.key != null && this.key.equals(key)) {
                 notify();
             }
         }
