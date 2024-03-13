@@ -41,7 +41,7 @@ public class RestServiceControllerTest {
 
         ResourceSet resourceSet = new ResourceSet(new Resource(id, name), amount);
 
-        when(inventoryTemplate.getForEntity(any(String.class), eq(ResourceSet.class))).thenReturn(new ResponseEntity<ResourceSet>(resourceSet, HttpStatus.ACCEPTED));
+        when(inventoryTemplate.getForEntity(any(String.class), eq(ResourceSet.class))).thenReturn(new ResponseEntity<ResourceSet>(resourceSet, HttpStatus.OK));
 
         ResourceSet responseResourceSet = restServiceController.checkInventory(task);
         assertEquals(resource.getId(), responseResourceSet.getResource().getId());
