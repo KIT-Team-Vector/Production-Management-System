@@ -13,14 +13,6 @@ import org.springframework.web.client.RestTemplate;
 public class RestServiceController implements IRestServiceController {
 
     RestTemplate restTemplate;
-
-    String inventoryServiceHost = System.getenv("INVENTORY_HOST");
-
-    String inventoryServicePort = System.getenv("INVENTORY_PORT");
-
-    String machineServiceHost = System.getenv("MACHINE_HOST");
-
-    String machineServicePort = System.getenv("MACHINE_PORT");
     private String checkInventoryUrl;
     private String checkMachineUrl;
 
@@ -29,25 +21,19 @@ public class RestServiceController implements IRestServiceController {
     private String startProductionUrl;
 
     public RestServiceController() {
+        this.restTemplate = new RestTemplate();
         initUrls();
     }
 
     private void initUrls() {
-        inventoryServiceHost = System.getenv("INVENTORY_HOST");
 
-        inventoryServicePort = System.getenv("INVENTORY_PORT");
+        checkInventoryUrl = "http://" + System.getenv("INVENTORY_HOST")+ ":" + System.getenv("INVENTORY_PORT") + "/rest-service/inventory/resource/set";
 
-        machineServiceHost = System.getenv("MACHINE_HOST");
+        checkMachineUrl = "http://" + System.getenv("MACHINE_HOST")+ ":" + System.getenv("MACHINE_PORT") + "/pms/mm/checkMachine";
 
-        machineServicePort = System.getenv("MACHINE_PORT");
+        requiredResourceUrl = "http://" + System.getenv("MACHINE_HOST") + ":" + System.getenv("MACHINE_PORT") + "/pms/mm/requiredResource";
 
-        checkInventoryUrl = "http://" + inventoryServiceHost+ ":" +inventoryServicePort + "/rest-service/inventory/resource/set";
-
-        checkMachineUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/checkMachine";
-
-        requiredResourceUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/requiredResource";
-
-        startProductionUrl = "http://" + machineServiceHost+ ":" + machineServicePort + "/pms/mm/produce";
+        startProductionUrl = "http://" + System.getenv("MACHINE_HOST") + ":" + System.getenv("MACHINE_PORT") + "/pms/mm/produce";
     }
 
     /**
@@ -65,7 +51,9 @@ public class RestServiceController implements IRestServiceController {
         String url = checkInventoryUrl + "/" + resourceID;
         ResponseEntity<ResourceSet> responseEntity = restTemplate.getForEntity(url, ResourceSet.class);
 
-        if(responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
+        System.out.println(responseEntity.getStatusCode().value());
+
+        if(responseEntity.getStatusCode() != HttpStatus.OK) {
             return null;
         }
 
