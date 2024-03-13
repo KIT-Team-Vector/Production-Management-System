@@ -28,7 +28,7 @@ public class RestServiceControllerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
     @Test
     public void testCheckInventory_noErrorCode() {
