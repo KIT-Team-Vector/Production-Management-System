@@ -1,8 +1,8 @@
+import edu.kit.ordermanager.entities.Order;
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
-import edu.kit.ordermanager.entities.Task;
-import edu.kit.pms.ordermanager.app.IKafkaService;
-import edu.kit.pms.ordermanager.app.IRestService;
+import edu.kit.pms.ordermanager.app.IInventoryService;
+import edu.kit.pms.ordermanager.app.IMachineService;
 import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,13 +18,13 @@ import static org.mockito.Mockito.when;
 public class PlaceOrderUseCaseTest {
 
 
-    private IRestService mockedRestService;
+    private IMachineService machineService;
 
-    private IKafkaService mockedKafka;
+    private IInventoryService IInventoryService;
 
     private static PlaceOrderUseCase placeOrderUseCase;
 
-    private Task task;
+    private Order order;
 
     private int id;
 
@@ -35,9 +35,9 @@ public class PlaceOrderUseCaseTest {
     private Resource resource;
     @BeforeEach
     public void setUp() {
-        mockedRestService = mock(IRestService.class);
-        mockedKafka = mock(IKafkaService.class);
-        placeOrderUseCase = new PlaceOrderUseCase(mockedRestService, mockedKafka);
+        machineService = mock(IMachineService.class);
+        IInventoryService = mock(IInventoryService.class);
+        placeOrderUseCase = new PlaceOrderUseCase(machineService, IInventoryService);
         MockitoAnnotations.openMocks(this);
 
         id = 1;
@@ -45,71 +45,71 @@ public class PlaceOrderUseCaseTest {
         amount = 3;
 
         resource = new Resource(id, name);
-        task = new Task(resource, amount);
+        order = new Order(resource, amount);
     }
 
     @Test
     public void test_EnoughResourcesInInventory_FirstRun() {
-        when(mockedRestService.checkInventory(any(Task.class))).thenReturn(new ResourceSet(new Resource(id, name), amount));
+        when(IInventoryService.checkInventory(any(Order.class))).thenReturn(new ResourceSet(new Resource(id, name), amount));
 
-        assertTrue(placeOrderUseCase.processOrder(task, true));
+        assertTrue(placeOrderUseCase.processOrder(order, true));
     }
 
     @Test
     public void test_EnoughResourcesInInventory_NotFirstRun() {
-        when(mockedRestService.checkInventory(any(Task.class))).thenReturn(new ResourceSet(new Resource(id, name), amount));
+        when(IInventoryService.checkInventory(any(Order.class))).thenReturn(new ResourceSet(new Resource(id, name), amount));
 
-        assertTrue(placeOrderUseCase.processOrder(task, false));
+        assertTrue(placeOrderUseCase.processOrder(order, false));
     }
 
     @Test
     public void test_EnoughResourcesInInventory_FirstRun_MachinesAvailable() {
-        when(mockedRestService.checkInventory(any(Task.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
-        when(mockedRestService.checkAvailableMachinces(any(Integer.class))).thenReturn(true);
-        when(mockedRestService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
-        when(mockedRestService.startProduction(any(ResourceSet.class))).thenReturn(true);
-        when(mockedKafka.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.checkInventory(any(Order.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
+        when(machineService.checkAvailableMachines(any(Integer.class))).thenReturn(true);
+        when(machineService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
+        when(machineService.startProduction(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
 
-        assertTrue(placeOrderUseCase.processOrder(task, true));
+        assertTrue(placeOrderUseCase.processOrder(order, true));
     }
 
     @Test
     public void test_EnoughResourcesInInventory_NotFirstRun_MachinesAvailable() {
-        when(mockedRestService.checkInventory(any(Task.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
-        when(mockedRestService.checkAvailableMachinces(any(Integer.class))).thenReturn(true);
-        when(mockedRestService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
-        when(mockedRestService.startProduction(any(ResourceSet.class))).thenReturn(true);
-        when(mockedKafka.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.checkInventory(any(Order.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
+        when(machineService.checkAvailableMachines(any(Integer.class))).thenReturn(true);
+        when(machineService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
+        when(machineService.startProduction(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
 
-        assertFalse(placeOrderUseCase.processOrder(task, false));
+        assertFalse(placeOrderUseCase.processOrder(order, false));
     }
 
     @Test
     public void test_EnoughResourcesInInventory_FirstRun_NoMachinesAvailable() {
-        when(mockedRestService.checkInventory(any(Task.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
-        when(mockedRestService.checkAvailableMachinces(any(Integer.class))).thenReturn(false);
-        when(mockedRestService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
-        when(mockedRestService.startProduction(any(ResourceSet.class))).thenReturn(true);
-        when(mockedKafka.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.checkInventory(any(Order.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
+        when(machineService.checkAvailableMachines(any(Integer.class))).thenReturn(false);
+        when(machineService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
+        when(machineService.startProduction(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
 
-        assertFalse(placeOrderUseCase.processOrder(task, true));
+        assertFalse(placeOrderUseCase.processOrder(order, true));
     }
 
     @Test
     public void test_EnoughResourcesInInventory_NotFirstRun_NoMachinesAvailable() {
-        when(mockedRestService.checkInventory(any(Task.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
-        when(mockedRestService.checkAvailableMachinces(any(Integer.class))).thenReturn(false);
-        when(mockedRestService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
-        when(mockedRestService.startProduction(any(ResourceSet.class))).thenReturn(true);
-        when(mockedKafka.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.checkInventory(any(Order.class))).thenReturn(new ResourceSet(new Resource(id, name), amount - 1));
+        when(machineService.checkAvailableMachines(any(Integer.class))).thenReturn(false);
+        when(machineService.findRequiredResource(any(Integer.class))).thenReturn(new Resource(2, "wood"));
+        when(machineService.startProduction(any(ResourceSet.class))).thenReturn(true);
+        when(IInventoryService.decreaseResourceSetRequest(any(ResourceSet.class))).thenReturn(true);
 
-        assertFalse(placeOrderUseCase.processOrder(task, false));
+        assertFalse(placeOrderUseCase.processOrder(order, false));
     }
 
     @AfterEach
     public void resetMocks() {
-        Mockito.reset(mockedRestService);
-        Mockito.reset(mockedKafka);
+        Mockito.reset(machineService);
+        Mockito.reset(IInventoryService);
         Mockito.clearAllCaches();
     }
 }

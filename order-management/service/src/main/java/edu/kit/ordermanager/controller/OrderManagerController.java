@@ -1,9 +1,10 @@
 package edu.kit.ordermanager.controller;
 
-import edu.kit.ordermanager.controllers.RestServiceAdapter;
+import edu.kit.ordermanager.controllers.InventoryServiceAdapter;
+import edu.kit.ordermanager.controllers.MachineServiceAdapter;
+import edu.kit.ordermanager.entities.Order;
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
-import edu.kit.ordermanager.entities.Task;
 import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
 import edu.kit.ordermanager.services.kafka.handler.KafkaServiceHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,13 @@ public class OrderManagerController {
     @Autowired
     private KafkaServiceHandler kafkaServiceHandler;
 
-    RestServiceAdapter restServiceAdapter;
+    MachineServiceAdapter machineServiceAdapter;
 
-    edu.kit.ordermanager.controllers.KafkaServiceAdapter kafkaController;
+    InventoryServiceAdapter kafkaController;
 
-    public OrderManagerController(@Autowired RestServiceAdapter restServiceAdapter, @Autowired edu.kit.ordermanager.controllers.KafkaServiceAdapter kafkaController) {
-        this.restServiceAdapter = restServiceAdapter;
-        placeOrder = new PlaceOrderUseCase(restServiceAdapter, kafkaController);
+    public OrderManagerController(@Autowired MachineServiceAdapter machineServiceAdapter, @Autowired InventoryServiceAdapter kafkaController) {
+        this.machineServiceAdapter = machineServiceAdapter;
+        placeOrder = new PlaceOrderUseCase(machineServiceAdapter, kafkaController);
     }
 
     @GetMapping("/index")
@@ -40,7 +41,7 @@ public class OrderManagerController {
     @GetMapping("/place")
     public ResourceSet placeOrder(@RequestParam(value = "id") int id, @RequestParam(value = "name") String name, @RequestParam(value = "amount") int amount) {
         Resource resource = new Resource(id, name);
-        Task order = new Task(resource, amount);
+        Order order = new Order(resource, amount);
         if(placeOrder.processOrder(order, true)) {
            return new ResourceSet(resource, amount);
         } else return new ResourceSet(resource, 0);

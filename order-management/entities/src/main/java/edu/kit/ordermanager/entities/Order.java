@@ -1,6 +1,6 @@
 package edu.kit.ordermanager.entities;
 
-public class Task {
+public class Order {
 
     private Long id;
 
@@ -10,11 +10,11 @@ public class Task {
 
     private int amount;
 
-    public Task() {
+    public Order() {
 
     }
 
-    public Task(Resource resource, int amount) {
+    public Order(Resource resource, int amount) {
         this.resource = resource;
         this.amount = amount;
     }

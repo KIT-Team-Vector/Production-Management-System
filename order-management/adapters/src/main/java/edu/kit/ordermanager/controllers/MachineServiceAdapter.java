@@ -2,15 +2,14 @@ package edu.kit.ordermanager.controllers;
 
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
-import edu.kit.ordermanager.entities.Task;
 import edu.kit.ordermanager.handlers.IRestServiceHandler;
-import edu.kit.pms.ordermanager.app.IRestService;
+import edu.kit.pms.ordermanager.app.IMachineService;
 
 
-public class RestServiceAdapter implements IRestService {
+public class MachineServiceAdapter implements IMachineService {
 
     IRestServiceHandler restServiceHandler;
-    private String checkInventoryUrl;
+
     private String checkMachineUrl;
 
     private String requiredResourceUrl;
@@ -18,8 +17,6 @@ public class RestServiceAdapter implements IRestService {
     private String startProductionUrl;
 
     private void initUrls() {
-
-        checkInventoryUrl = "http://" + System.getenv("INVENTORY_HOST")+ ":" + System.getenv("INVENTORY_PORT") + "/rest-service/inventory/resource/set";
 
         checkMachineUrl = "http://" + System.getenv("MACHINE_HOST")+ ":" + System.getenv("MACHINE_PORT") + "/pms/mm/checkMachine";
 
@@ -32,21 +29,14 @@ public class RestServiceAdapter implements IRestService {
      * For tests
      * @param restServiceHandler
      */
-    public RestServiceAdapter(IRestServiceHandler restServiceHandler) {
+    public MachineServiceAdapter(IRestServiceHandler restServiceHandler) {
         this.restServiceHandler = restServiceHandler;
         initUrls();
     }
 
-    @Override
-    public ResourceSet checkInventory(Task order) {
-        int resourceID = order.getResource().getId();
-        String url = checkInventoryUrl + "/" + resourceID;
-
-        return this.restServiceHandler.sendGetRequest(url, ResourceSet.class, null);
-    }
 
     @Override
-    public boolean checkAvailableMachinces(int resourceId) {
+    public boolean checkAvailableMachines(int resourceId) {
         String url = checkMachineUrl + "/" + resourceId;
         return Boolean.TRUE.equals(restServiceHandler.sendGetRequest(url, Boolean.class, null));
     }
@@ -60,9 +50,5 @@ public class RestServiceAdapter implements IRestService {
     @Override
     public boolean startProduction(ResourceSet resourceSet) {
         return Boolean.TRUE.equals(restServiceHandler.sendPostRequest(startProductionUrl, resourceSet, Boolean.class));
-    }
-
-    public String getCheckInventoryUrl() {
-        return this.checkInventoryUrl;
     }
 }
