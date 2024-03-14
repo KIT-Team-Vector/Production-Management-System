@@ -4,6 +4,8 @@ import edu.kit.pms.mm.core.Machine;
 import edu.kit.pms.mm.core.MachineRepository;
 import edu.kit.pms.mm.core.Resource;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,6 +22,8 @@ import java.util.Collection;
 @EnableAutoConfiguration
 @ComponentScan
 public class MachineHandler implements MachineRepository<OneToOneMachine> {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
     private OneToOneMachineRepository machineRepository;
@@ -49,7 +53,7 @@ public class MachineHandler implements MachineRepository<OneToOneMachine> {
         Machine machine = find(new ResourceImpl(resourceId)).stream().findFirst().orElse(null);
 
         if (machine == null) {
-            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "No machine available to produce resource " + resourceId);
+            throw new ResponseStatusException(HttpStatus.PRECONDITION_FAILED, "No machine available that can produce resource " + resourceId);
         }
 
         return machine.getInput();
@@ -58,18 +62,22 @@ public class MachineHandler implements MachineRepository<OneToOneMachine> {
     @Override
     public boolean add(OneToOneMachine machine) {
         if (machineRepository.existsById(machine.getId())) {
+            LOGGER.warn("Unable to add " + machine + " because it already exists");
             return false;
         }
         machineRepository.save(machine);
+        LOGGER.info("Added " + machine);
         return true;
     }
 
     @Override
-    public boolean remove(int id) {
-        if (machineRepository.existsById(id)) {
-            machineRepository.deleteById(id);
+    public boolean remove(int machineId) {
+        if (machineRepository.existsById(machineId)) {
+            machineRepository.deleteById(machineId);
+            LOGGER.info("Removed machine " + machineId);
             return true;
         }
+        LOGGER.warn("Unable to remove machine " + machineId + " because it does not exist");
         return false;
     }
 
@@ -88,6 +96,7 @@ public class MachineHandler implements MachineRepository<OneToOneMachine> {
             }
         });
 
+        LOGGER.info("Found " + foundMachines.size() + " machine(s) producing " + producedResource);
         return foundMachines;
     }
 
