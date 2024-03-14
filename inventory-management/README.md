@@ -131,7 +131,7 @@ This will download, build and deploy the Inventory-Database, the Maschine-Databa
 
 
 ## Environment Variables
-The environment variables are configured in the docker-compose files. Depending on the chosen deployment option, no changes to the default values are necessary
+The environment variables are configured in the docker-compose files. Depending on the chosen deployment option, no changes to the default values are necessary.
 ### MySQL Configuration:
 
 - **DB_HOST**:
