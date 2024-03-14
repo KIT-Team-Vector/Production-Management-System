@@ -6,11 +6,11 @@ import edu.kit.ordermanager.entities.Task;
 
 public class PlaceOrderUseCase {
 
-    private final IRestServiceController restServiceController;
+    private final IRestService restServiceController;
 
-    private final IKafkaController kafkaController;
+    private final IKafkaService kafkaController;
 
-    public PlaceOrderUseCase(IRestServiceController restServiceController, IKafkaController kafkaController) {
+    public PlaceOrderUseCase(IRestService restServiceController, IKafkaService kafkaController) {
         this.restServiceController = restServiceController;
         this.kafkaController = kafkaController;
     }
