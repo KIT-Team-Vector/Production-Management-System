@@ -5,6 +5,8 @@ import edu.kit.pms.mm.core.Resource;
 import edu.kit.pms.mm.core.ResourceSet;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceImpl;
 import edu.kit.pms.mm.infrastructure.production.coreImpl.ResourceSetImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,9 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class AddInventoryImpl implements AddInventory {
+
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -26,17 +31,24 @@ public class AddInventoryImpl implements AddInventory {
 
     @Override
     public boolean add(ResourceSet resourceSet) {
-        ResourceSetImpl addedResourceSet;
+        ResourceSetImpl returnedResourceSet;
         String inventoryServiceHost = System.getenv("INVENTORY_HOST");
         String inventoryServicePort = System.getenv("INVENTORY_PORT");
 
         try {
-            addedResourceSet = restTemplate.postForObject("http://" + inventoryServiceHost + ":" + inventoryServicePort + "/rest-service/inventory/resource/set", resourceSet, ResourceSetImpl.class);
+            returnedResourceSet = restTemplate.postForObject("http://" + inventoryServiceHost + ":" + inventoryServicePort + "/rest-service/inventory/resource/set", resourceSet, ResourceSetImpl.class);
         } catch (RestClientException e) {
+            LOGGER.error("An exception occurred while trying to add " + resourceSet + " to the inventory");
             return false;
         }
 
-        return addedResourceSet != null;
+        if (returnedResourceSet != null) {
+            LOGGER.info("Added " + resourceSet + " to inventory");
+            return true;
+        }
+
+        LOGGER.warn("Unable to add resources to inventory");
+        return false;
     }
 
     @Override

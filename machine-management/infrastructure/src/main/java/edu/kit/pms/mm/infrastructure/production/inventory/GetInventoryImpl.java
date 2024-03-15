@@ -15,6 +15,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.BooleanDeserializer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -23,6 +25,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Component
 public class GetInventoryImpl implements GetInventory {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private final Producer<Long, ResourceSet> msgProducer;
     private final ConsumerFactory<Boolean, BooleanDeserializer> consumerFactory;
@@ -43,8 +47,10 @@ public class GetInventoryImpl implements GetInventory {
         ProducerRecord<Long, ResourceSet> msgRecord = new ProducerRecord<>(KafkaConstants.TOPIC_DECREASE_RESOURCE_SET_REQUEST, msgRecordKey, resourceSet);
 
         if (checkResponse(msgRecordKey, msgRecord)) {
+            LOGGER.info("Got " + resourceSet + " from inventory");
             return resourceSet;
         } else {
+            LOGGER.error("Unable to get " + resourceSet + " from inventory");
             throw new InventoryException("Unable to get resources from inventory");
         }
     }
@@ -81,6 +87,7 @@ public class GetInventoryImpl implements GetInventory {
                 });
             }
         } catch (ExecutionException | InterruptedException e) {
+            LOGGER.error("Unable to send requests to inventory");
             throw new InventoryException("Unable to send requests to inventory");
         }
 
