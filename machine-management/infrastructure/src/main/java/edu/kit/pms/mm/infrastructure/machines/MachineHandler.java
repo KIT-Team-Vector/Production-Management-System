@@ -25,8 +25,11 @@ public class MachineHandler implements MachineRepository<OneToOneMachine> {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    @Autowired
-    private OneToOneMachineRepository machineRepository;
+    private final OneToOneMachineRepository machineRepository;
+
+    public MachineHandler(@Autowired OneToOneMachineRepository machineRepository) {
+        this.machineRepository = machineRepository;
+    }
 
     @PostMapping("/machines/add")
     public @ResponseBody boolean addMachine(@RequestParam int machineId, @RequestParam int inputResourceId, @RequestParam(defaultValue = "") String inputResourceName, @RequestParam int outputResourceId, @RequestParam(defaultValue = "") String outputResourceName) {

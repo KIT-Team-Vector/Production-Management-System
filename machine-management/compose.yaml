@@ -9,6 +9,7 @@ services:
       MYSQL_USER: springUser
       MYSQL_PASSWORD: springUserPW
     volumes:
+      - machine-data:/var/lib/mysql
       - ./infrastructure/src/main/resources/initMachineManagementDB.sql:/docker-entrypoint-initdb.d/initMachineManagementDB.sql
     ports:
       - "3306:3306"
@@ -35,3 +36,6 @@ services:
       - INVENTORY_PORT=8080
       - KAFKA_BROKER_HOST=kafka
       - KAFKA_BROKER_PORT=29092
+
+volumes:
+  inventory-data:
