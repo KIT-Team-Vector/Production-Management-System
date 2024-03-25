@@ -24,7 +24,6 @@ The Inventory-Management provides Jakarta-Endpoints (REST) and Kafka-Endpoints (
 - [Environment Variables](#environment-variables)
    - [MySQL Configuration](#mysql-configuration)
    - [Kafka Broker Configuration](#kafka-broker-configuration)
-- [Documentation](#documentation)
 - [License](#license)
 - [Authors](#authors)
 
@@ -116,9 +115,9 @@ Navigate to this [folder](./) within powershell or similiar and run:
   docker-compose up
 ```
 
-This will download all dependencies, build and deploy the microservice, and also download the mysql database and deploy it within an multi container setup.
+This will download all dependencies, build and deploy the microservice, and also download the mysql database and deploy it within a multi container setup.
 
-The Kafka-Server and the other microservices can be independently deployed. If you do that, add them to the [Environment Variables](#environment-variables). If you want to set up Kafka locally, [here](../kafka-informations\SetupKafkaLocally.txt") are helpfull informations and scripts.
+The Kafka-Server and the other microservices can be independently deployed. If you do that, add them to the [Environment Variables](#environment-variables). If you want to set up Kafka locally, [here](../kafka-informations/SetupKafkaLocally.txt") are helpfully informations and scripts.
 
 ### Deploy with Production-Management-System
 This option deploys the Inventory-Management together with the Production-Management-System and is configuration free.

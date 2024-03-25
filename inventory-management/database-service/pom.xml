@@ -18,10 +18,5 @@
       <artifactId>mysql-connector-java</artifactId>	
       <version>8.0.32</version>
     </dependency>
-    <dependency>
-    	<groupId>edu.kit.pms</groupId>
-    	<artifactId>domain-model</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
   </dependencies>
 </project>
