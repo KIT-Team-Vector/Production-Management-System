@@ -2,20 +2,20 @@ package edu.kit.ordermanager.controllers;
 
 import edu.kit.ordermanager.entities.Order;
 import edu.kit.ordermanager.entities.ResourceSet;
-import edu.kit.ordermanager.handlers.IKafkaServiceHandler;
+import edu.kit.ordermanager.handlers.IMessageHandler;
 import edu.kit.ordermanager.handlers.IRestServiceHandler;
 import edu.kit.pms.ordermanager.app.IInventoryService;
 
 public class InventoryServiceAdapter implements IInventoryService {
 
-    private IKafkaServiceHandler kafkaServiceHandler;
+    private final IMessageHandler kafkaServiceHandler;
 
-    private IRestServiceHandler restServiceHandler;
+    private final IRestServiceHandler restServiceHandler;
 
     private final String checkInventoryUrl;
 
 
-    public InventoryServiceAdapter(IKafkaServiceHandler kafkaServiceHandler, IRestServiceHandler restServiceHandler) {
+    public InventoryServiceAdapter(IMessageHandler kafkaServiceHandler, IRestServiceHandler restServiceHandler) {
         this.kafkaServiceHandler = kafkaServiceHandler;
         this.restServiceHandler = restServiceHandler;
         checkInventoryUrl = "http://" + System.getenv("INVENTORY_HOST")+ ":" + System.getenv("INVENTORY_PORT") + "/rest-service/inventory/resource/set";
@@ -31,6 +31,6 @@ public class InventoryServiceAdapter implements IInventoryService {
 
     @Override
     public boolean decreaseResourceSetRequest(ResourceSet resourceSet) {
-        return kafkaServiceHandler.sendDecreaseResourceSetRequest(resourceSet);
+        return kafkaServiceHandler.sendMessage(resourceSet);
     }
 }

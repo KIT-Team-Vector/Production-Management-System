@@ -6,7 +6,6 @@ import edu.kit.ordermanager.entities.Order;
 import edu.kit.ordermanager.entities.Resource;
 import edu.kit.ordermanager.entities.ResourceSet;
 import edu.kit.pms.ordermanager.app.PlaceOrderUseCase;
-import edu.kit.ordermanager.services.kafka.handler.KafkaServiceHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,26 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/order")
 public class OrderManagerController {
-    private PlaceOrderUseCase placeOrder;
-
-    @Autowired
-    private KafkaServiceHandler kafkaServiceHandler;
+    private final PlaceOrderUseCase placeOrder;
 
     MachineServiceAdapter machineServiceAdapter;
-
-    InventoryServiceAdapter kafkaController;
 
     public OrderManagerController(@Autowired MachineServiceAdapter machineServiceAdapter, @Autowired InventoryServiceAdapter kafkaController) {
         this.machineServiceAdapter = machineServiceAdapter;
         placeOrder = new PlaceOrderUseCase(machineServiceAdapter, kafkaController);
-    }
-
-    @GetMapping("/index")
-    public String index() {
-        Resource resource = new Resource(2,"wood");
-        ResourceSet resourceSet = new ResourceSet(resource, 1);
-        kafkaServiceHandler.sendDecreaseResourceSetRequest(resourceSet);
-        return "Request send";
     }
 
     @GetMapping("/place")
