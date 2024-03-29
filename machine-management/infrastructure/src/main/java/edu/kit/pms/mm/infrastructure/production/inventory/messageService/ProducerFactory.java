@@ -4,10 +4,14 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Properties;
 
 public class ProducerFactory<T, D> {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     protected Class<D> serializer;
 
@@ -25,6 +29,8 @@ public class ProducerFactory<T, D> {
         props.put(ProducerConfig.CLIENT_ID_CONFIG, KafkaConstants.CLIENT_ID);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, LongSerializer.class.getName());
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, serializer.getName());
+
+        LOGGER.info("Created new KafkaProducer");
         return new KafkaProducer<>(props);
     }
 

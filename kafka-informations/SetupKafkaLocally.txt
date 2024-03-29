@@ -1,0 +1,51 @@
+Kafka on a WSL:
+
+1. install kafka
+
+2. Prepare the host:
+Run commands on termina:
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+
+Execute das Powershell script within this folder (prepareKafka.ps1) to create Firewall Rules and WSL proxies:
+Open powershell:
+	- Set-ExecutionPolicy RemoteSigned
+	- powershell -file "FileLocation\configureHostForKafka.ps1"
+Weitere Befehle:
+	- Show proxies: netsh interface portproxy show v4tov4
+	- see connection: netstat -ab
+
+3. Configure kafka
+You need to configure listners and advertised.listeners.
+See server file as example within this folder
+
+4. Start and stop kafka:
+zookeeper-server-start.sh ~/workspace/kafka_2.13-3.6.0/config/zookeeper.properties
+kafka-server-start.sh ~/workspace/kafka_2.13-3.6.0/config/server.properties
+
+kafka-server-stop.sh
+zookeeper-server-stop.sh
+
+5. Add Consumers and Listeners, Topics:
+//Write events
+kafka-console-producer.sh --topic decreaseResourceSetRequest --bootstrap-server 192.168.0.163:9091
+
+//Read events
+kafka-console-consumer.sh --topic decreaseResourceSetResponse --from-beginning --bootstrap-server 192.168.0.163:9091
+
+//Write events
+kafka-console-producer.sh --topic Error --bootstrap-server 192.168.0.163:9091
+
+//Read events
+kafka-console-consumer.sh --topic Error --from-beginning --bootstrap-server 192.168.0.163:9091
+
+//Create a topic
+kafka-topics.sh --create --topic demo --bootstrap-server 192.168.0.163:9091
+
+6. Delete all data
+//If you also want to delete any data of your local Kafka environment including any events you have created along the way, run the command: 
+rm -rf ~/workspace/kafka_2.13-3.6.0/kafka-logs
+
+
+
+

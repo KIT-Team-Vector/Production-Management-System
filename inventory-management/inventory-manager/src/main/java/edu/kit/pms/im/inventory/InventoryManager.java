@@ -30,7 +30,7 @@ public interface InventoryManager {
 	 * Adds the amount to an existing matching resource set (same id and name), or
 	 * creates new ResourceSet
 	 * 
-	 * @param ResourceSet to be added
+	 * @param resourceSet to be added
 	 * @return added resourceSet
 	 * @throws InventoryManagementError if resourceSet could not be added
 	 */
@@ -42,7 +42,7 @@ public interface InventoryManager {
 	 * 
 	 * @param resourceSet, the amount of the ressourceSet is used as absolute
 	 * @return success boolean value
-	 * @throws InventoryManagementError, if resourceSet could't be found
+	 * @throws InventoryManagementError, if resourceSet couldn't be found
 	 */
 
 	public boolean increaseResourceSet(ResourceSet resourceSet) throws InventoryManagementError;
