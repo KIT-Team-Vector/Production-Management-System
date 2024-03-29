@@ -15,5 +15,6 @@ public interface KafkaConstants {
 
     Integer MAX_POLL_RECORDS = 100;
 
-    Duration POLLING_DURATION = Duration.ofMillis(100);
+    // 4 sec needed to get consumer group up before record is received
+    Duration POLLING_DURATION = Duration.ofMillis(4000);
 }

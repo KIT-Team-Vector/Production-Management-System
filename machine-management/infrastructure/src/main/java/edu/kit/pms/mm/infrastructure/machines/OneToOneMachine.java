@@ -77,4 +77,14 @@ public class OneToOneMachine implements Machine {
             throw new ProductionException("This machine does only work with " + new ResourceImpl(inputResourceId, inputResourceName) + ", but " + providedResourceSet.resource().id() + " was provided");
         }
     }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() +
+                " (id: " + id +
+                ", input: " + getInput() +
+                ", output: " + getOutput() +
+                ", multiplier: " + getMultiplier() +
+                ")";
+    }
 }
