@@ -30,6 +30,7 @@ The Inventory-Management provides Jakarta-Endpoints (REST) and Kafka-Endpoints (
 
 ## Architecture
 The Inventory-Management microservice was developed following the principles of Clean Architecture design and follows a modular architecture to ensure scalability, maintainability, and reliability. It consists of the following key modules:
+
 ![overviewArchitecture](./presentation/HighLevelArchitecture.png)
 - **domain-model**: 
    - Provides core concepts and entities of the microservice.     Examples are `Resource-Set` and `Resource-Set-Repository`.
