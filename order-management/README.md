@@ -21,6 +21,21 @@ The response contains a ResourceSet consisting of the desired resource (id, name
 
 ## Required Services
 
-The required requests to fulfill the Order-Management service are listed in **Figure 2**.
+The required requests to fulfill the Order-Management service are listed here.
 
-![Figure 1](Dokumentation/Required%20Requests.png)
+![Figure 2](Dokumentation/Required%20Requests.png)
+
+## Architecture 
+The architecture of the microservice follows the principles of the clean-architecture.\
+This enables independence from the underlying framework and the technologies. \
+The following diagram illustrates the various packages and their relationships within the architecture of the service.
+A detailed depiction can be found [here](Dokumentation/Class-diagram.png).
+
+![Figure 3](Dokumentation/Architecture.png)
+
+## Deployment
+To deploy the service as a standalone go to the order-management directory and simply run:
+
+```bash
+  docker compose up
+```
