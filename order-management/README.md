@@ -7,7 +7,7 @@ To fulfill this service  it requires a Inventory- and Machine-Service.
 Communication with the other services is done via **REST** and **message-based** protocols.
 
 
-# Provided Service
+## Provided Service
 
 The provided service can be accessed via a **REST Get-Request**, as illustrated in **Figure 1**. 
 Three query parameters must be provided: 
@@ -19,7 +19,7 @@ The response contains a ResourceSet consisting of the desired resource (id, name
 
 ![Figure 1](Dokumentation/Provided%20Request.png)
 
-## Required Service
+## Required Services
 
 The required requests to fulfill the Order-Management service are listed in **Figure 2**.
 
