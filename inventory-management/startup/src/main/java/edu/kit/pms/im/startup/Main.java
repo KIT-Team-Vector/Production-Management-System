@@ -7,7 +7,6 @@ import edu.kit.pms.im.inventory.InventoryManager;
 import edu.kit.pms.im.inventory.InventoryManagerImpl;
 import edu.kit.pms.im.domain.InventoryManagementError;
 import edu.kit.pms.im.domain.ResourceSetImpl;
-import edu.kit.pms.im.common.services.MessageReceiverService;
 import edu.kit.pms.im.database.connection.EnvVariableConnectionProvider;
 import edu.kit.pms.im.database.repository.SqlResourceSetRepository;
 import edu.kit.pms.im.message.handlers.*;
@@ -28,10 +27,10 @@ import edu.kit.pms.im.common.controllers.*;
 public class Main {
 
 	public static void main(String[] args) {
-		initialiseAndStartInventoryManagment();
+		initialiseAndStartInventoryManagement();
 	}
 
-	private static void initialiseAndStartInventoryManagment() {
+	private static void initialiseAndStartInventoryManagement() {
 
 		InventoryManager inventoryManager = createInventoryManager();
 		MessageSenderService messageSenderService = createMessageSenderService();
