@@ -135,29 +135,23 @@ The environment variables are configured in the docker-compose files. Depending 
 
 - **DB_HOST**:
   - Description: Specifies the hostname of the MySQL database.
-  - Value: `<DB_HOST>`
 
 - **DB_PORT**:
   - Description: Specifies the port number of the MySQL database.
-  - Value: `<DB_PORT>`
 
 - **DB_USERNAME**:
   - Description: Specifies the username for accessing the MySQL database.
-  - Value: `<DB_USERNAME>`
 
 - **DB_PASSWORD**:
   - Description: Specifies the password for the MySQL user.
-  - Value: `<DB_PASSWORD>`
 
 ### Kafka Broker Configuration:
 
 - **KAFKA_BROKER_HOST**:
   - Description: Specifies the hostname of the Kafka broker.
-  - Value: `<KAFKA_BROKER_HOST>`
 
 - **KAFKA_BROKER_PORT**:
   - Description: Specifies the port number of the Kafka broker.
-  - Value: `<KAFKA_BROKER_PORT>
 
 
 ## License
