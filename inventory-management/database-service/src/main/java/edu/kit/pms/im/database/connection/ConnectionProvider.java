@@ -3,6 +3,7 @@ package edu.kit.pms.im.database.connection;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+
 /**
  * Interface to get mysql connections via jdbc, 
  */

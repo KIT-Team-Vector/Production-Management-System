@@ -46,7 +46,7 @@ public class InventoryControllerTest {
 		// Given,When,Then
 		// No double initialization for singleton
 		assertThrows(AssertionError.class, () -> {
-			InventoryControllerImpl.init(mockInventoryManager, mockMessageSenderService);;
+			InventoryControllerImpl.init(mockInventoryManager, mockMessageSenderService);
 		});
 	}
 	

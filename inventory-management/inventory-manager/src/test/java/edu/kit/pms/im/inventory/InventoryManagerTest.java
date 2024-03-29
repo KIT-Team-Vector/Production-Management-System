@@ -76,7 +76,6 @@ public class InventoryManagerTest {
 		when(mockRepository.get(testResourceSetWithPositiveAmount.resource().id()))
 				.thenReturn(testResourceSetWithPositiveAmount, resultResourceSetWithExpectedFinalAmount);
 		when(mockRepository.updateAmount(anyInt(), anyInt())).thenReturn(true);
-		;
 		when(mockRepository.add(anyString(), anyInt())).thenReturn(testResourceSetWithPositiveAmount);
 
 		// When
