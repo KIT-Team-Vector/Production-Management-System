@@ -17,7 +17,7 @@ public class MessageProducer {
 
     public boolean sendMessage(String topic, ResourceSet resourceSet) {
         synchronized (this) {
-            this.key = key = new Random().nextLong();
+            this.key = new Random().nextLong();
             kafkaTemplate.send(topic, key, resourceSet);
             try {
                 wait();

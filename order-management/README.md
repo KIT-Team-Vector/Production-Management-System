@@ -17,7 +17,7 @@ Communication with the other services is done via **REST** and **message-based**
 
 ## Provided Service
 
-The provided service can be accessed via a **REST Get-Request**, as illustrated in **Figure 1**. 
+The provided service can be accessed via a **REST Get-Request**, as illustrated below. 
 Three query parameters must be provided: 
 1. The ID of the desired resource 
 2. The name of the desired resource
@@ -26,6 +26,8 @@ Three query parameters must be provided:
 The response contains a ResourceSet consisting of the desired resource (id, name) and its amount.
 
 ![Figure 1](Dokumentation/Provided%20Request.png)
+
+If the order-management is deployed as a **standalone** the **REST Request**
 
 ## Required Services
 
@@ -42,7 +44,10 @@ A detailed depiction can be found [here](Dokumentation/Class-diagram.png).
 ![Figure 3](Dokumentation/Architecture.png)
 
 ## Deployment
-To deploy the service with Docker follow these steps:
+The microservice can be deployed as a standalone docker container or as a docker compose with
+a Kafka and Zookeeper container to run the Kafka-Server. 
+
+To deploy the service with Kafka and Zookeeper follow these steps.
 
 1. Clone this repository
 2. Install [Docker](https://docs.docker.com/engine/install/)
@@ -50,10 +55,15 @@ To deploy the service with Docker follow these steps:
 4. Run this command in the directory:
 
 ```bash
+  docker compose -f compose.yaml -f compose-with-kafka.yaml up
+```
+To deploy the service as a standalone run this command instead:
+
+```bash
   docker compose up
 ```
-The Docker Compose has a Kafka and Zookeeper container to run the Kafka-Server. 
 
+- **Hint:** With the standalone you need to setup Kafka on your local system as described [here](https://medium.com/@shyamal.jadav/apache-kafka-with-spring-boot-application-e34d47c7b3e4).
 ### Environment Variables 
 
 The environment variables for the Docker Compose can be changed in the compose.yaml file. 
