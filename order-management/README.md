@@ -66,4 +66,6 @@ To deploy the service as a standalone run this command instead:
 - **Hint:** With the standalone you need to setup Kafka on your local system as described [here](https://medium.com/@shyamal.jadav/apache-kafka-with-spring-boot-application-e34d47c7b3e4).
 ### Environment Variables 
 
-The environment variables for the Docker Compose can be changed in the compose.yaml file. 
+The environment variables for the Docker Compose can be changed in the [compose.yaml](compose.yaml) file.
+If the service is deployed with the [Production-Management-System](../README.md) the environment variables can
+be changed [here](../compose.yaml).
