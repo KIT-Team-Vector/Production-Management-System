@@ -2,7 +2,7 @@ name: machine-management
 
 services:
   machine-db:
-    image: mysql:latest
+    image: mysql:8.3.0
     environment:
       MYSQL_ROOT_PASSWORD: sqlRootPW
       MYSQL_DATABASE: machineManagementDB

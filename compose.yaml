@@ -2,7 +2,7 @@ name: production-management-system
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.4
+    image: confluentinc/cp-zookeeper:7.6.0
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -10,7 +10,7 @@ services:
       - kafka-network
 
   kafka:
-    image: confluentinc/cp-kafka:7.4.4
+    image: confluentinc/cp-kafka:7.6.0
     depends_on:
       - zookeeper
     networks:
@@ -26,7 +26,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
 
   inventory-db:
-    image: mysql:latest
+    image: mysql:8.3.0
     environment:
       MYSQL_ROOT_PASSWORD: iv_53895738753
     volumes:
@@ -64,7 +64,7 @@ services:
       - "8081:8080"
 
   machine-db:
-    image: mysql:latest
+    image: mysql:8.3.0
     depends_on:
       inventory-management:
         condition: service_started
