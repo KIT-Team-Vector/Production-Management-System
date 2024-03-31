@@ -34,7 +34,12 @@ A detailed depiction can be found [here](Dokumentation/Class-diagram.png).
 ![Figure 3](Dokumentation/Architecture.png)
 
 ## Deployment
-To deploy the service as a standalone go to the order-management directory and simply run:
+To deploy the service with Docker follow these steps:
+
+1. Clone this repository
+2. Install [Docker](https://docs.docker.com/engine/install/)
+3. Go to the order-management directory
+4. Run this command in the directory:
 
 ```bash
   docker compose up
