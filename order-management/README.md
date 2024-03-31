@@ -6,6 +6,14 @@ If the desired resource is not available, a production order is sent to the Mach
 To fulfill this service  it requires a Inventory- and Machine-Service.
 Communication with the other services is done via **REST** and **message-based** protocols.
 
+## Content
+  - [Provided Service](#provided-service)
+  - [Required Service](#required-services)
+  - [Architecture](#architecture-)
+  - [Deployment](#deployment)
+    - [Environment Variables](#environment-variables-)
+
+
 
 ## Provided Service
 
@@ -44,3 +52,8 @@ To deploy the service with Docker follow these steps:
 ```bash
   docker compose up
 ```
+The Docker Compose has a Kafka and Zookeeper container to run the Kafka-Server. 
+
+### Environment Variables 
+
+The environment variables for the Docker Compose can be changed in the compose.yaml file. 
