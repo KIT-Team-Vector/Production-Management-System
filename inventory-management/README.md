@@ -29,7 +29,7 @@ The Inventory-Management provides Jakarta-Endpoints (REST) and Kafka-Endpoints (
 
 
 ## Architecture
-The Inventory-Management microservice was developed following the principles of Clean Architecture design and follows a modular architecture to ensure scalability, maintainability, and reliability. It consists of the following key modules:
+The Inventory-Management microservice was developed adhering to the principles of Clean Architecture design and follows a modular architecture. It consists of the following key modules:
 
 ![overviewArchitecture](./presentation/HighLevelArchitecture.png)
 - **domain-model**: 
@@ -117,7 +117,7 @@ Navigate to this [folder](./) within powershell or similiar and run:
 
 This will download all dependencies, build and deploy the microservice, and also download the mysql database and deploy it within a multi container setup.
 
-The Kafka-Server and the other microservices can be independently deployed. If you do that, add them to the [Environment Variables](#environment-variables). If you want to set up Kafka locally, [here](../kafka-informations/SetupKafkaLocally.txt") are helpfully informations and scripts.
+The Kafka-Server and the other microservices can be independently deployed. To do so, include them to the [Environment Variables](#environment-variables). If you want to set up Kafka locally, [here](../kafka-informations/SetupKafkaLocally.txt) are helpfully informations and scripts.
 
 ### Deploy with Production-Management-System
 This option deploys the Inventory-Management together with the Production-Management-System and is configuration free.
@@ -126,7 +126,7 @@ Navigate to this [folder](../) within powershell or similiar and run:
 ```powershell
   docker-compose up
 ```
-This will download, build and deploy the Inventory-Database, the Maschine-Database, the Kafka-Server, the Order-Management, the Maschine-Managment and the Inventory-Management  within a multi container setup. No further configurations are necessary.
+This will download, build and deploy the Inventory-Database, the Machine-Database, the Kafka-Server, the Order-Management, the Maschine-Managment and the Inventory-Management  within a multi container setup. No further configurations are necessary.
 
 
 ## Environment Variables
