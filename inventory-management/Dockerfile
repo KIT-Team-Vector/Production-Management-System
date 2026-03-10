@@ -11,7 +11,7 @@ COPY . .
 RUN mvn clean package
 
 # Use an official OpenJDK runtime as a parent image for the final image
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
